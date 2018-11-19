@@ -8,21 +8,23 @@ public class Judgement {
     private int caseID;
     private Calendar judgementDate;
     private CourtType courtType;
-    private List<String> courtCases;
+    private List<Judgement> courtCases;
     private JudgementType judgementType;
     private List<Judge> judges;
     private JudgementSource source;
-    private List<Person> courtReporters;
+    private List<CourtReporter> courtReporters;
     private String decision;
     private String summary;
     private String textContent;
     private List<String> legalBases;
     private List<Regulation> referencedRegulations;
     private List<String> keywords;
-    private List<Judgement> referencedCourtCases;
+    private List<CourtCaseReference> referencedCourtCases;
     private Calendar receiptDate;
-    private CourtType meansOfAppeal;
+    private String meansOfAppeal;
     private String judgementResult;
-    private List<Judge> dissentingOpinions;
+    private List<Judge> dissentingOpinions; // TODO: zmiana Judge na obiekt DissentingOpinion
+
+    // TODO: Zmiana Judgement na GeneralJudgement. Implementacja CommonJudgement, SupremeJudgement, ConstitutionalJudgement
 
 }
