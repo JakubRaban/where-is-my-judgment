@@ -11,8 +11,11 @@ public class Judge {
     public String toString() {
         StringBuilder sb = new StringBuilder(name);
         sb.append(" - ").append(function);
-        for(JudgeRole judgeRole : specialRoles) {
-            sb.append(judgeRole.toString()); // TODO przecinki i spacje
+        if(specialRoles.size() > 0) sb.append(", ");
+        var iterator = specialRoles.iterator();
+        while(iterator.hasNext()) {
+            sb.append(iterator.next());
+            if(iterator.hasNext()) sb.append(", ");
         }
         return sb.toString();
     }
