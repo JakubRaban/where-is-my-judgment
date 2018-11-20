@@ -1,6 +1,6 @@
 package pl.jakubraban.whereismyjudgement;
 
-public enum JudgementType {
+public enum JudgmentType {
 
     DECISION, RESOLUTION, SENTENCE, REGULATION,
     REASONS

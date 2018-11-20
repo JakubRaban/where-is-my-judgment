@@ -3,15 +3,15 @@ package pl.jakubraban.whereismyjudgement;
 import java.util.Calendar;
 import java.util.List;
 
-public class Judgement {
+public class Judgment {
 
     private int caseID;
-    private Calendar judgementDate;
+    private Calendar judgmentDate;
     private CourtType courtType;
-    private List<Judgement> courtCases;
-    private JudgementType judgementType;
+    private List<Judgment> courtCases;
+    private JudgmentType judgmentType;
     private List<Judge> judges;
-    private JudgementSource source;
+    private JudgmentSource source;
     private List<CourtReporter> courtReporters;
     private String decision;
     private String summary;
@@ -22,8 +22,8 @@ public class Judgement {
     private List<CourtCaseReference> referencedCourtCases;
     private Calendar receiptDate;
     private String meansOfAppeal;
-    private String judgementResult;
-    private List<String> lowerCourtJudgements;
+    private String judgmentResult;
+    private List<String> lowerCourtJudgments;
     private PersonnelType personnelType;
     private int divisionID;
     // Chambers?

@@ -2,7 +2,7 @@ package pl.jakubraban.whereismyjudgement;
 
 import java.util.Calendar;
 
-public class JudgementSource {
+public class JudgmentSource {
 
     private CourtType sourceJudicalSystem;
     private String judgementURL;
