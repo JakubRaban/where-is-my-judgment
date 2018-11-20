@@ -42,7 +42,9 @@ public class Judgment {
         sb.append("Data: ");
         sb.append(new SimpleDateFormat("dd.MM.yyyy").format(judgmentDate.getTime()));
         sb.append("\n");
-        sb.append("Typ sądu: ").append(courtType).append("\n");
+        sb.append("Typ sądu: ");
+        sb.append(courtType);
+        sb.append("\n");
         sb.append("Lista sędziów: ").append("\n");
         for(Judge judge : judges) {
             sb.append(" -- ").append(judge).append("\n");
