@@ -30,8 +30,6 @@ public class Judgment {
     // Chambers?
     private List<DissentingOpinion> dissentingOpinions;
 
-    // TODO: toString()'i w enumach
-
     public String getMetric() {
         StringBuilder sb = new StringBuilder();
         sb.append("Sygnatura: ");
