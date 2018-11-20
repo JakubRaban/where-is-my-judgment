@@ -23,8 +23,10 @@ public class Judgement {
     private Calendar receiptDate;
     private String meansOfAppeal;
     private String judgementResult;
-    private List<Judge> dissentingOpinions; // TODO: zmiana Judge na obiekt DissentingOpinion
-
-    // TODO: Zmiana Judgement na GeneralJudgement. Implementacja CommonJudgement, SupremeJudgement, ConstitutionalJudgement
+    private List<String> lowerCourtJudgements;
+    private PersonnelType personnelType;
+    private int divisionID;
+    // Chambers?
+    private List<DissentingOpinion> dissentingOpinions;
 
 }
