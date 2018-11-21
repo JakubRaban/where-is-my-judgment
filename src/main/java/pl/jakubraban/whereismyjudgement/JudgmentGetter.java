@@ -18,12 +18,15 @@ public class JudgmentGetter {
             throw new InvalidPathException(pathToJudgments.toString(), "is not a directory");
     }
 
-    public ArrayList<String> getFilesContents() throws IOException {
-        List<Path> pathList = Files.walk(pathToJudgments)
-                .filter(path -> path.endsWith(".json"))
+    public List<Path> getAllJSONs() throws IOException {
+        return Files.walk(pathToJudgments)
+                .filter(path -> path.toString().endsWith(".json"))
                 .filter(Files::isRegularFile)
                 .collect(Collectors.toList());
-        return extractFromFiles(pathList);
+    }
+
+    public ArrayList<String> getFilesContents() throws IOException {
+        return extractFromFiles(getAllJSONs());
     }
 
     private ArrayList<String> extractFromFiles(List<Path> paths) throws IOException {
