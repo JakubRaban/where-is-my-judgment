@@ -1,10 +1,15 @@
 package pl.jakubraban.whereismyjudgement;
 
+import com.google.gson.annotations.SerializedName;
+
 import java.util.List;
 
 public class Judgment {
 
-    private int id;
+    // TODO change String to Calendar in judgmentDate, receiptDate
+
+    @SerializedName("id")
+    private int caseId;
     private String judgmentDate;
     private CourtType courtType;
     private List<CourtCase> courtCases;
@@ -24,8 +29,9 @@ public class Judgment {
     private String judgmentResult;
     private List<String> lowerCourtJudgments;
     private PersonnelType personnelType;
+    @SerializedName("division.id")
     private int divisionID;
-    // Chambers?
+    private List<Chamber> chambers;
     private List<DissentingOpinion> dissentingOpinions;
 
     public String getMetric() {

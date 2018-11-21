@@ -7,7 +7,7 @@ public class JudgmentSource {
     @SerializedName("code")
     private CourtType sourceCourtType;
     private String judgementUrl;
-    private int judgementID;
+    private int judgementId;
     @SerializedName("publisher")
     private String publisherName;
     @SerializedName("reviser")
