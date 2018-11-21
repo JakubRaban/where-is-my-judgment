@@ -9,13 +9,17 @@ public class Judge {
     private List<JudgeRole> specialRoles;
 
     public String toString() {
-        StringBuilder sb = new StringBuilder(name);
-        sb.append(" - ").append(function);
-        if(specialRoles.size() > 0) sb.append(", ");
+        StringBuilder sb = new StringBuilder();
+        if(function != null) sb.append(function).append(" ");
+        sb.append(name);
+        if(specialRoles.size() > 0) sb.append(" - ");
         var iterator = specialRoles.iterator();
         while(iterator.hasNext()) {
-            sb.append(iterator.next());
-            if(iterator.hasNext()) sb.append(", ");
+            JudgeRole currentRole = iterator.next();
+            if(currentRole != null) {
+                sb.append(currentRole);
+                if(iterator.hasNext()) sb.append(", ");
+            }
         }
         return sb.toString();
     }
