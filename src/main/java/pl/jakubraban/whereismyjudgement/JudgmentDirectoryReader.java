@@ -8,11 +8,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class JudgmentGetter {
+public class JudgmentDirectoryReader {
 
     private Path pathToJudgments;
 
-    public JudgmentGetter(String path) {
+    public JudgmentDirectoryReader(String path) {
         pathToJudgments = Paths.get(path);
         if(!Files.isDirectory(pathToJudgments))
             throw new InvalidPathException(pathToJudgments.toString(), "is not a directory");

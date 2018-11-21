@@ -1,7 +1,7 @@
 package pl.jakubraban.whereismyjudgment;
 
 import org.junit.Test;
-import pl.jakubraban.whereismyjudgement.JudgmentGetter;
+import pl.jakubraban.whereismyjudgement.JudgmentDirectoryReader;
 
 import java.io.IOException;
 import java.nio.file.Path;
@@ -13,7 +13,7 @@ public class JudgmentGetterTest {
 
     @Test
     public void testGetAllJSONs() throws IOException {
-        var getter = new JudgmentGetter(System.getProperty("user.dir") + "\\judgments\\dummy");
+        var getter = new JudgmentDirectoryReader(System.getProperty("user.dir") + "\\judgments\\dummy");
         List<Path> paths = getter.getAllJSONs();
         assertEquals(10, paths.size());
     }
