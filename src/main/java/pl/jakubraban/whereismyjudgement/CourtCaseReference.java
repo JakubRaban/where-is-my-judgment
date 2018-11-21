@@ -5,7 +5,7 @@ import java.util.List;
 public class CourtCaseReference {
 
     private String caseNumber;
-    private List<String> judgementIDs;
+    private List<String> judgementIds;
     private boolean generated;
 
 }

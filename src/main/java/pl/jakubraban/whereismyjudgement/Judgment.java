@@ -1,13 +1,11 @@
 package pl.jakubraban.whereismyjudgement;
 
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.List;
 
 public class Judgment {
 
-    private int caseID;
-    private Calendar judgmentDate;
+    private int id;
+    private String judgmentDate;
     private CourtType courtType;
     private List<String> courtCases;
     private JudgmentType judgmentType;
@@ -21,7 +19,7 @@ public class Judgment {
     private List<Regulation> referencedRegulations;
     private List<String> keywords;
     private List<CourtCaseReference> referencedCourtCases;
-    private Calendar receiptDate;
+    private String receiptDate;
     private String meansOfAppeal;
     private String judgmentResult;
     private List<String> lowerCourtJudgments;
@@ -38,7 +36,7 @@ public class Judgment {
         }
         sb.append("\n");
         sb.append("Data: ");
-        sb.append(new SimpleDateFormat("dd.MM.yyyy").format(judgmentDate.getTime()));
+        sb.append(judgmentDate);
         sb.append("\n");
         sb.append("Typ sądu: ");
         sb.append(courtType);

@@ -1,14 +1,17 @@
 package pl.jakubraban.whereismyjudgement;
 
-import java.util.Calendar;
+import com.google.gson.annotations.SerializedName;
 
 public class JudgmentSource {
 
-    private CourtType sourceJudicalSystem;
-    private String judgementURL;
-    private int sourceJudgementID;
+    @SerializedName("code")
+    private CourtType sourceCourtType;
+    private String judgementUrl;
+    private int judgementID;
+    @SerializedName("publisher")
     private String publisherName;
-    private String revisorName;
-    private Calendar publicationDate;
+    @SerializedName("reviser")
+    private String reviserName;
+    private String publicationDate;
 
 }
