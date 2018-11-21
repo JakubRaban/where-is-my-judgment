@@ -16,7 +16,6 @@ public class JudgmentGetterTest {
         var getter = new JudgmentGetter(System.getProperty("user.dir") + "\\judgments\\dummy");
         List<Path> paths = getter.getAllJSONs();
         assertEquals(10, paths.size());
-        System.out.println(paths);
     }
 
 }
