@@ -8,7 +8,8 @@ public class Regulation {
     private int journalYear;
     @SerializedName("journalNo")
     private int journalNumber;
-    private int journalEntry;
+    @SerializedName("journalEntry")
+    private int journalEntryNumber;
     private String text;
 
 }
