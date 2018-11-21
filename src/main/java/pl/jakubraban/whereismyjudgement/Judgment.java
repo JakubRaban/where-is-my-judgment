@@ -7,11 +7,11 @@ public class Judgment {
     private int id;
     private String judgmentDate;
     private CourtType courtType;
-    private List<String> courtCases;
+    private List<CourtCase> courtCases;
     private JudgmentType judgmentType;
     private List<Judge> judges;
     private JudgmentSource source;
-    private List<CourtReporter> courtReporters;
+    private List<String> courtReporters;
     private String decision;
     private String summary;
     private String textContent;
@@ -31,8 +31,8 @@ public class Judgment {
     public String getMetric() {
         StringBuilder sb = new StringBuilder();
         sb.append("Sygnatura: ");
-        for(String aCase : courtCases) {
-            sb.append(aCase).append(" ");
+        for(CourtCase aCase : courtCases) {
+            sb.append(aCase.getCaseNumber()).append(" ");
         }
         sb.append("\n");
         sb.append("Data: ");
