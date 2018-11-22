@@ -1,6 +1,9 @@
 package pl.jakubraban.whereismyjudgement;
 
 import com.google.gson.annotations.SerializedName;
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.safety.Whitelist;
 
 import java.util.List;
 
@@ -53,6 +56,22 @@ public class Judgment {
             sb.append(" -- ").append(judge).append("\n");
         }
         return sb.toString();
+    }
+
+    public String getReasons() {
+        int index = textContent.toLowerCase().indexOf("uzasadnienie");
+        if(index == -1) index = textContent.toLowerCase().indexOf("u z a s a d n i e n i e");
+        String extractedReasons = textContent.substring(index);
+        return dropHTMLtags(extractedReasons);
+    }
+
+    private String dropHTMLtags(String html) {
+        Document document = Jsoup.parse(html);
+        document.outputSettings(new Document.OutputSettings().prettyPrint(false));
+        document.select("br").append("\\n");
+        document.select("p").prepend("\\n");
+        String s = document.html().replaceAll("\\\\n", "\n");
+        return Jsoup.clean(s, "", Whitelist.none(), new Document.OutputSettings().prettyPrint(false));
     }
 
 }
