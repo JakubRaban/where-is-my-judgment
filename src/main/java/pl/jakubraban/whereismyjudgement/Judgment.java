@@ -12,7 +12,8 @@ public class Judgment {
     private int caseId;
     private String judgmentDate;
     private CourtType courtType;
-    private List<CourtCase> courtCases;
+    @SerializedName("courtCases")
+    private List<CourtCaseReference> concernedCourtCases;
     private JudgmentType judgmentType;
     private List<Judge> judges;
     private JudgmentSource source;
@@ -37,7 +38,7 @@ public class Judgment {
     public String getMetric() {
         StringBuilder sb = new StringBuilder();
         sb.append("Sygnatura: ");
-        for(CourtCase aCase : courtCases) {
+        for(CourtCaseReference aCase : concernedCourtCases) {
             sb.append(aCase.getCaseNumber()).append(" ");
         }
         sb.append("\n");
