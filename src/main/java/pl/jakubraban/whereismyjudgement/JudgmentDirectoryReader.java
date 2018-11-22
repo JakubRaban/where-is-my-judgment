@@ -34,6 +34,7 @@ public class JudgmentDirectoryReader {
         for(Path path : paths) {
             BufferedReader reader = Files.newBufferedReader(path, Charset.forName("UTF-8"));
             contents.add(reader.readLine());
+            reader.close();
         }
         return contents;
     }
