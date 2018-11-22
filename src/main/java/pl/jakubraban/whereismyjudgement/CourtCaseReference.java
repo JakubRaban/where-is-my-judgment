@@ -8,4 +8,8 @@ public class CourtCaseReference {
     private List<String> judgementIds;
     private boolean generated;
 
+    public String getCaseNumber() {
+        return caseNumber;
+    }
+
 }
