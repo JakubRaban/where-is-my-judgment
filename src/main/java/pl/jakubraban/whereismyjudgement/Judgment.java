@@ -5,15 +5,14 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.safety.Whitelist;
 
+import java.util.Calendar;
 import java.util.List;
 
 public class Judgment {
 
-    // TODO change String to Calendar in judgmentDate, receiptDate
-
     @SerializedName("id")
     private int caseId;
-    private String judgmentDate;
+    private Calendar judgmentDate;
     private CourtType courtType;
     @SerializedName("courtCases")
     private List<CourtCaseReference> concernedCourtCases;
@@ -28,7 +27,7 @@ public class Judgment {
     private List<Regulation> referencedRegulations;
     private List<String> keywords;
     private List<CourtCaseReference> referencedCourtCases;
-    private String receiptDate;
+    private Calendar receiptDate;
     private String meansOfAppeal;
     private String judgmentResult;
     private List<String> lowerCourtJudgments;
@@ -62,14 +61,18 @@ public class Judgment {
         int index = textContent.toLowerCase().indexOf("uzasadnienie");
         if(index == -1) index = textContent.toLowerCase().indexOf("u z a s a d n i e n i e");
         String extractedReasons = textContent.substring(index);
-        return dropHTMLtags(extractedReasons);
+        return dropHTMLTags(extractedReasons);
     }
 
-    private String dropHTMLtags(String html) {
+    public List<CourtCaseReference> getConcernedCourtCases() {
+        return concernedCourtCases;
+    }
+
+    private String dropHTMLTags(String html) {
         Document document = Jsoup.parse(html);
         document.outputSettings(new Document.OutputSettings().prettyPrint(false));
         document.select("br").append("\\n");
-        document.select("p").prepend("\\n");
+        // document.select("p").prepend("\\n");
         String s = document.html().replaceAll("\\\\n", "\n");
         return Jsoup.clean(s, "", Whitelist.none(), new Document.OutputSettings().prettyPrint(false));
     }
