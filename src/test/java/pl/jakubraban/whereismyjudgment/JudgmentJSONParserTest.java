@@ -9,7 +9,7 @@ import java.util.List;
 
 import static org.junit.Assert.*;
 
-public class JudgmentGetterTest {
+public class JudgmentJSONParserTest {
 
     @Test
     public void testGetAllJSONs() throws IOException {

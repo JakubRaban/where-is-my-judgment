@@ -1,4 +1,4 @@
-package pl.jakubraban.whereismyjudgement;
+package pl.jakubraban.whereismyjudgement.data.judgment;
 
 public enum CourtType {
 

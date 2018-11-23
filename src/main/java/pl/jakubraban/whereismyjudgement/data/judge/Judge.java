@@ -1,4 +1,4 @@
-package pl.jakubraban.whereismyjudgement;
+package pl.jakubraban.whereismyjudgement.data.judge;
 
 import java.util.List;
 

@@ -1,9 +1,12 @@
-package pl.jakubraban.whereismyjudgement;
+package pl.jakubraban.whereismyjudgement.data.judgment;
 
 import com.google.gson.annotations.SerializedName;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.safety.Whitelist;
+import pl.jakubraban.whereismyjudgement.data.judge.Judge;
+import pl.jakubraban.whereismyjudgement.data.other.DissentingOpinion;
+import pl.jakubraban.whereismyjudgement.data.other.Regulation;
 
 import java.util.Calendar;
 import java.util.List;

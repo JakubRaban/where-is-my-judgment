@@ -1,6 +1,6 @@
 package pl.jakubraban.whereismyjudgement.storage;
 
-import pl.jakubraban.whereismyjudgement.Judgment;
+import pl.jakubraban.whereismyjudgement.data.judgment.Judgment;
 
 import java.util.Map;
 

@@ -1,4 +1,4 @@
-package pl.jakubraban.whereismyjudgement;
+package pl.jakubraban.whereismyjudgement.data.other;
 
 import com.google.gson.annotations.SerializedName;
 
