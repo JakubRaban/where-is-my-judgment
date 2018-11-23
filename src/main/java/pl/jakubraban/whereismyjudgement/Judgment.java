@@ -68,6 +68,10 @@ public class Judgment {
         return concernedCourtCases;
     }
 
+    public Calendar getJudgmentDate() {
+        return judgmentDate;
+    }
+
     private String dropHTMLTags(String html) {
         Document document = Jsoup.parse(html);
         document.outputSettings(new Document.OutputSettings().prettyPrint(false));

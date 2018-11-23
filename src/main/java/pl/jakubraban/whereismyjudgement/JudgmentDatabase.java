@@ -10,6 +10,8 @@ public class JudgmentDatabase {
 
     }
 
+    public static void search(String signature) {
 
+    }
 
 }
