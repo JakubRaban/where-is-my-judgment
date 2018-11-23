@@ -16,7 +16,7 @@ public class JudgmentDatabase {
 
     }
 
-    public static void search(String signature) {
+    public void search(String signature) {
 
     }
 
