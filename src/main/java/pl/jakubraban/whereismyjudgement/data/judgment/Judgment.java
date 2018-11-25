@@ -8,6 +8,7 @@ import pl.jakubraban.whereismyjudgement.data.judge.Judge;
 import pl.jakubraban.whereismyjudgement.data.other.DissentingOpinion;
 import pl.jakubraban.whereismyjudgement.data.other.Regulation;
 
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.List;
 
@@ -48,7 +49,7 @@ public class Judgment {
         }
         sb.append("\n");
         sb.append("Data: ");
-        sb.append(judgmentDate);
+        sb.append(new SimpleDateFormat("dd.MM.yyyy").format(judgmentDate.getTime()));
         sb.append("\n");
         sb.append("Typ sądu: ");
         sb.append(courtType);
