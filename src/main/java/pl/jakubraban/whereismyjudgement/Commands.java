@@ -1,11 +1,12 @@
 package pl.jakubraban.whereismyjudgement;
 
+import pl.jakubraban.whereismyjudgement.data.judge.Judge;
 import pl.jakubraban.whereismyjudgement.data.judgment.Judgment;
 import pl.jakubraban.whereismyjudgement.storage.*;
 
-import java.util.LinkedList;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class Commands {
 
@@ -31,13 +32,26 @@ public class Commands {
     }
 
     public int numberOfJudgmentsOfSpecifiedJudge(String judgeName) {
-        return (int) database.getAllJudgments().stream()
-                .map(Judgment::getJudges)
-                .flatMap(List::stream)
+        return (int) getJudgeStream()
                 .filter(judge -> judge.getName().equals(judgeName))
                 .count();
     }
 
+    public List<Judge> getTopNJudges(final int N) {
+        Map<Judge, Integer> judgeCount = new HashMap<>();
+        getJudgeStream()
+                .forEach(judge -> judgeCount.merge(judge, 1, (a,b) -> a + b));
+        return judgeCount.entrySet().stream()
+                .sorted(Comparator.comparing(Map.Entry::getValue))
+                .limit(N)
+                .map(Map.Entry::getKey)
+                .collect(Collectors.toList());
+    }
 
+    private Stream<Judge> getJudgeStream() {
+        return database.getAllJudgments().stream()
+                .map(Judgment::getJudges)
+                .flatMap(List::stream);
+    }
 
 }
