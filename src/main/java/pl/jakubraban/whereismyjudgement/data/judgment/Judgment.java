@@ -76,6 +76,10 @@ public class Judgment {
         return judgmentDate;
     }
 
+    public List<Judge> getJudges() {
+        return judges;
+    }
+
     private String dropHTMLTags(String html) {
         Document document = Jsoup.parse(html);
         document.outputSettings(new Document.OutputSettings().prettyPrint(false));
