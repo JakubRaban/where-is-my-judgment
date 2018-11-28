@@ -3,12 +3,15 @@ package pl.jakubraban.whereismyjudgement;
 import pl.jakubraban.whereismyjudgement.data.judge.Judge;
 import pl.jakubraban.whereismyjudgement.data.judgment.CourtType;
 import pl.jakubraban.whereismyjudgement.data.judgment.Judgment;
-import pl.jakubraban.whereismyjudgement.storage.*;
+import pl.jakubraban.whereismyjudgement.data.other.Regulation;
+import pl.jakubraban.whereismyjudgement.storage.JudgmentDatabase;
+import pl.jakubraban.whereismyjudgement.storage.JudgmentDatabaseProvider;
 
 import java.time.Month;
 import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
+
 import static java.util.Comparator.comparing;
 import static java.util.Comparator.reverseOrder;
 
@@ -60,6 +63,36 @@ public class Commands {
                 .map(Month::of)
                 .forEach(month -> judgmentsByMonth.merge(month, 1, (a,b) -> a + b));
         return judgmentsByMonth;
+    }
+
+    public Map<CourtType, Integer> numberOfJudgmentsByCourtType() {
+        Map<CourtType, Integer> judgmentsByCourtType = new HashMap<>();
+        getJudgmentsStream()
+                .map(Judgment::getCourtType)
+                .forEach(courtType -> judgmentsByCourtType.merge(courtType, 1, (a,b) -> a + b));
+        return judgmentsByCourtType;
+    }
+
+    public Map<Regulation, Integer> getTopNReferencedRegulations(final int N) {
+        Map<Regulation, Integer> regulationCount = new HashMap<>();
+        Map<Regulation, Integer> topRegulations = new HashMap<>();
+        getJudgmentsStream()
+                .map(Judgment::getReferencedRegulations)
+                .flatMap(List::stream)
+                .forEach(regulation -> regulationCount.merge(regulation, 1, (a,b) -> a + b));
+        regulationCount.entrySet().stream()
+                .sorted(comparing(Map.Entry::getValue, reverseOrder()))
+                .limit(N)
+                .forEach(entry -> topRegulations.put(entry.getKey(), entry.getValue()));
+        return topRegulations;
+    }
+
+    public double getAverageNumberOfJudgesPerJudgment() {
+        return getJudgmentsStream()
+                .map(Judgment::getJudges)
+                .mapToDouble(List::size)
+                .average()
+                .orElse(-1);
     }
 
     private Stream<Judge> getJudgeStream() {
