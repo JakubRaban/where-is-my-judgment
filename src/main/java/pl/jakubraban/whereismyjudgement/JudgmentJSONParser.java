@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonDeserializer;
 import com.google.gson.reflect.TypeToken;
+import pl.jakubraban.whereismyjudgement.data.judgment.Judgment;
 
 import java.lang.reflect.Type;
 import java.text.ParseException;
@@ -27,13 +28,12 @@ public class JudgmentJSONParser {
                 return null;
             }
         }).create();
-        LinkedList<Judgment> judgments = gson.fromJson(properJson, judgmentListType);
-        return judgments;
+        return gson.fromJson(properJson, judgmentListType);
     }
 
     private String dropMetadata(String parsedJson) {
         int start = parsedJson.indexOf("items") + 7;
-        int end = parsedJson.indexOf("queryTemplate") - 2;
+        int end = parsedJson.indexOf("queryTemplate") - 2; // TODO wyjątek kiedy JSON to nie wyrok
         return parsedJson.substring(start, end);
     }
 
