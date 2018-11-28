@@ -8,6 +8,10 @@ public class Judge {
     private String function;
     private List<JudgeRole> specialRoles;
 
+    public String getName() {
+        return name;
+    }
+
     public String toString() {
         StringBuilder sb = new StringBuilder();
         if(function != null) sb.append(function).append(" ");
