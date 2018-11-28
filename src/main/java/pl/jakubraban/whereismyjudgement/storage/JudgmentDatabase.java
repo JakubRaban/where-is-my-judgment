@@ -1,10 +1,12 @@
 package pl.jakubraban.whereismyjudgement.storage;
 
+import pl.jakubraban.whereismyjudgement.data.judgment.CourtCaseReference;
 import pl.jakubraban.whereismyjudgement.data.judgment.Judgment;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
-import java.util.Random;
+import java.util.NoSuchElementException;
 
 public class JudgmentDatabase {
 
@@ -15,15 +17,24 @@ public class JudgmentDatabase {
     }
 
     public void add(Judgment judgment) {
-
+        List<CourtCaseReference> numbersOfCases = judgment.getConcernedCourtCases();
+        for(CourtCaseReference caseReference : numbersOfCases) {
+            judgments.put(caseReference.getCaseNumber(), judgment);
+        }
     }
 
     public void add(String key, Judgment judgment) {
         judgments.put(key, judgment);
     }
 
-    public void search(String signature) {
+    public Judgment search(String signature) {
+        Judgment foundJudgment = judgments.get(signature);
+        if(foundJudgment == null) throw new NoSuchElementException();
+        return foundJudgment;
+    }
 
+    public Judgment remove(String signature) {
+        return judgments.remove(signature);
     }
 
     public int size() {
