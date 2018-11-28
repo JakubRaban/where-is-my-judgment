@@ -3,10 +3,7 @@ package pl.jakubraban.whereismyjudgement.storage;
 import pl.jakubraban.whereismyjudgement.data.judgment.CourtCaseReference;
 import pl.jakubraban.whereismyjudgement.data.judgment.Judgment;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.NoSuchElementException;
+import java.util.*;
 
 public class JudgmentDatabase {
 
@@ -35,6 +32,10 @@ public class JudgmentDatabase {
 
     public Judgment remove(String signature) {
         return judgments.remove(signature);
+    }
+
+    public List<Judgment> getAllJudgments() {
+        return new LinkedList<>(judgments.values());
     }
 
     public int size() {
