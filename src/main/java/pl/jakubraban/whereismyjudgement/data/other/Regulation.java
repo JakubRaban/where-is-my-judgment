@@ -2,6 +2,8 @@ package pl.jakubraban.whereismyjudgement.data.other;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.util.Objects;
+
 public class Regulation {
 
     private String journalTitle;
@@ -11,5 +13,9 @@ public class Regulation {
     @SerializedName("journalEntry")
     private int journalEntryNumber;
     private String text;
+
+    public int hashCode() {
+        return Objects.hash(journalTitle, journalYear, journalEntryNumber, journalNumber);
+    }
 
 }
