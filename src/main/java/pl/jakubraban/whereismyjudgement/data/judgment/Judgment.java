@@ -80,6 +80,14 @@ public class Judgment {
         return judges;
     }
 
+    public CourtType getCourtType() {
+        return courtType;
+    }
+
+    public List<Regulation> getReferencedRegulations() {
+        return referencedRegulations;
+    }
+
     private String dropHTMLTags(String html) {
         Document document = Jsoup.parse(html);
         document.outputSettings(new Document.OutputSettings().prettyPrint(false));
