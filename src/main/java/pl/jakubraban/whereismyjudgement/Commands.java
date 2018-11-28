@@ -4,8 +4,7 @@ import pl.jakubraban.whereismyjudgement.data.judge.Judge;
 import pl.jakubraban.whereismyjudgement.data.judgment.CourtType;
 import pl.jakubraban.whereismyjudgement.data.judgment.Judgment;
 import pl.jakubraban.whereismyjudgement.data.other.Regulation;
-import pl.jakubraban.whereismyjudgement.storage.JudgmentDatabase;
-import pl.jakubraban.whereismyjudgement.storage.JudgmentDatabaseProvider;
+import pl.jakubraban.whereismyjudgement.storage.*;
 
 import java.time.Month;
 import java.util.*;
