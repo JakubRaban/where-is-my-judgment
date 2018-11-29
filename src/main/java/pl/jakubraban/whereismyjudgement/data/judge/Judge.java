@@ -1,5 +1,6 @@
 package pl.jakubraban.whereismyjudgement.data.judge;
 
+import java.util.Iterator;
 import java.util.List;
 import java.util.Objects;
 
@@ -18,7 +19,7 @@ public class Judge {
         if(function != null) sb.append(function).append(" ");
         sb.append(name);
         if(specialRoles.size() > 0) sb.append(" - ");
-        var iterator = specialRoles.iterator();
+        Iterator<JudgeRole> iterator = specialRoles.iterator();
         while(iterator.hasNext()) {
             JudgeRole currentRole = iterator.next();
             if(currentRole != null) {
