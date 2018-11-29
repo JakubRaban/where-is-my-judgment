@@ -1,7 +1,7 @@
 package pl.jakubraban.whereismyjudgment;
 
 import org.junit.Test;
-import pl.jakubraban.whereismyjudgement.JudgmentDirectoryReader;
+import pl.jakubraban.whereismyjudgement.input.JudgmentDirectoryReader;
 
 import java.io.IOException;
 import java.nio.file.Path;

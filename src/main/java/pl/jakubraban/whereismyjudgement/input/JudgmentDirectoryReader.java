@@ -1,4 +1,4 @@
-package pl.jakubraban.whereismyjudgement;
+package pl.jakubraban.whereismyjudgement.input;
 
 import java.io.BufferedReader;
 import java.io.IOException;

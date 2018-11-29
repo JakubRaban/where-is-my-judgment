@@ -1,4 +1,4 @@
-package pl.jakubraban.whereismyjudgement;
+package pl.jakubraban.whereismyjudgement.input;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
