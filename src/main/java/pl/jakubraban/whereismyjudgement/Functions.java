@@ -54,9 +54,9 @@ public class Functions {
                 .count();
     }
 
-    public Map<Judge, Integer> getTopNJudges(final int N) {
+    public LinkedHashMap<Judge, Integer> getTopNJudges(final int N) {
         Map<Judge, Integer> judgeCount = new HashMap<>();
-        Map<Judge, Integer> topJudges = new HashMap<>();
+        LinkedHashMap<Judge, Integer> topJudges = new LinkedHashMap<>();
         getJudgeStream()
                 .forEach(judge -> judgeCount.merge(judge, 1, (a,b) -> a + b));
         judgeCount.entrySet().stream()
@@ -84,9 +84,9 @@ public class Functions {
         return judgmentsByCourtType;
     }
 
-    public Map<String, Integer> getTopNReferencedRegulations(final int N) {
+    public LinkedHashMap<String, Integer> getTopNReferencedRegulations(final int N) {
         Map<String, Integer> regulationCount = new HashMap<>();
-        Map<String, Integer> topRegulations = new HashMap<>();
+        LinkedHashMap<String, Integer> topRegulations = new LinkedHashMap<>();
         getJudgmentsStream()
                 .map(Judgment::getReferencedRegulations)
                 .flatMap(List::stream)
