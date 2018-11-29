@@ -36,7 +36,7 @@ public class Functions {
         return database.search(signature).getReasons();
     }
 
-    public int numberOfJudgmentsOfSpecifiedJudge(String judgeName) {
+    public Integer numberOfJudgmentsOfSpecifiedJudge(String judgeName) {
         return (int) getJudgeStream()
                 .filter(judge -> judge.getName().equals(judgeName))
                 .count();
@@ -87,7 +87,7 @@ public class Functions {
         return topRegulations;
     }
 
-    public double getAverageNumberOfJudgesPerJudgment() {
+    public Double getAverageNumberOfJudgesPerJudgment() {
         return getJudgmentsStream()
                 .map(Judgment::getJudges)
                 .mapToDouble(List::size)
