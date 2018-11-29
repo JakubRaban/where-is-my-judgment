@@ -11,11 +11,13 @@ import java.util.stream.Collectors;
 public class JudgmentDirectoryReader {
 
     private Path pathToJudgments;
+    public static boolean isPathSet = false;
 
     public JudgmentDirectoryReader(String path) {
         pathToJudgments = Paths.get(path);
         if(!Files.isDirectory(pathToJudgments))
             throw new InvalidPathException(pathToJudgments.toString(), "is not a directory");
+        isPathSet = true;
     }
 
     public List<Path> getAllJSONs() throws IOException {
