@@ -1,13 +1,10 @@
 package pl.jakubraban.whereismyjudgement;
 
 import pl.jakubraban.whereismyjudgement.data.judgment.Judgment;
+import pl.jakubraban.whereismyjudgement.output.DataPrinter;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Comparator;
-import java.util.List;
-import java.util.stream.Stream;
+import java.util.*;
 
 public class Main {
 
@@ -17,6 +14,12 @@ public class Main {
         read(connection, ReadlineBuilder.builder().enableHistory(false).build(), "[aesh@rules]$ ");
         connection.openBlocking();
         */
+
+        Map<String, Integer> map = new HashMap<>();
+        map.put("rg", 2);
+        map.put("rdgsd", 5);
+        map.put("egsef", 3);
+        new DataPrinter().print(map);
 
         JudgmentJSONParser parser = new JudgmentJSONParser();
         String path = System.getProperty("user.dir") + "\\judgments\\dummy";

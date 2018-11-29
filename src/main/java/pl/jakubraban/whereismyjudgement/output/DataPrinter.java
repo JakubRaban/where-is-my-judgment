@@ -13,7 +13,6 @@ public class DataPrinter {
             }
         }
         if(o instanceof String) System.out.println((String) o);
-        else System.out.println(o);
     }
 
     private void printMap(Map map) {
