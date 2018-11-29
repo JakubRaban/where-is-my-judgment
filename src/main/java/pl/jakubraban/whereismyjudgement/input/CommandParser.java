@@ -12,7 +12,7 @@ public class CommandParser {
     private static final String TOP_JUDGES                 = "topJudges";
     private static final String GET_METRICS                = "getMetrics";
     private static final String GET_REASONS                = "getReasons";
-    private static final String GET_JUDGES_JUDGMENTS       = "getJudge'sJudgments";
+    private static final String GET_JUDGES_JUDGMENTS       = "howManyJudgments";
     private static final String JUDGMENTS_BY_MONTH         = "judgmentsByMonth";
     private static final String JUDGMENTS_BY_COURT_TYPE    = "judgmentsByCourtType";
     private static final String TOP_REFERENCED_REGULATIONS = "topReferencedRegulations";
@@ -24,7 +24,7 @@ public class CommandParser {
         this.functions = functions;
     }
 
-    public void parse(String input) {
+    public Object parse(String input) {
         String[] commandParts = input.split(" ");
         int numberOfArguments = commandParts.length - 1;
         String command = commandParts[0];
@@ -35,15 +35,25 @@ public class CommandParser {
         switch(command) {
             case SET_PATH:
                 if(numberOfArguments < 1) throw ex;
-                functions.getReaderForSpecifiedPath(arguments[0]);
+                return functions.getReaderForSpecifiedPath(arguments[0]);
             case GET_METRICS:
                 if(numberOfArguments < 1) throw ex;
                 List<String> metrics = new LinkedList<>(Arrays.asList(arguments));
-                functions.getMetrics(metrics);
+                return functions.getMetrics(metrics);
             case TOP_JUDGES:
                 if(numberOfArguments < 1) functions.getTopNJudges(10);
                 int numberOfJudges = Integer.parseInt(arguments[0]);
-                functions.getTopNJudges(numberOfJudges);
+                return functions.getTopNJudges(numberOfJudges);
+            case GET_REASONS:
+                if(numberOfArguments < 1) throw ex;
+                return functions.getReasons(arguments[0]);
+            case GET_JUDGES_JUDGMENTS:
+                if(numberOfArguments < 1) throw ex;
+                return functions.numberOfJudgmentsOfSpecifiedJudge(arguments[0]);
+            case JUDGMENTS_BY_MONTH:
+                return functions.numberOfJudgmentsByMonth();
+            default:
+                throw new IllegalArgumentException("Bad command");
         }
     }
 }
