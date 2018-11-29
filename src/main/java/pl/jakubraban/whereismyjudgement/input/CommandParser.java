@@ -2,6 +2,7 @@ package pl.jakubraban.whereismyjudgement.input;
 
 import pl.jakubraban.whereismyjudgement.Functions;
 
+import java.io.IOException;
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
@@ -24,7 +25,7 @@ public class CommandParser {
         this.functions = functions;
     }
 
-    public Object parse(String input) {
+    public Object parse(String input) throws IOException {
         String splitBySpacesOutsideQuotesRegex = "\\s+(?=([^\"]*\"[^\"]*\")*[^\"]*$)";
         String[] commandParts = input.split(splitBySpacesOutsideQuotesRegex);
         for(int i = 0; i < commandParts.length; i++)
@@ -38,7 +39,7 @@ public class CommandParser {
         switch(command) {
             case SET_PATH:
                 if(numberOfArguments < 1) throw ex;
-                return functions.getReaderForSpecifiedPath(arguments[0]);
+                return functions.getNewJudgments(arguments[0]);
             case GET_METRICS:
                 if(numberOfArguments < 1) throw ex;
                 List<String> metrics = new LinkedList<>(Arrays.asList(arguments));

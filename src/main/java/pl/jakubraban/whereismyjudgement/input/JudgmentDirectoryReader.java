@@ -32,7 +32,7 @@ public class JudgmentDirectoryReader {
     }
 
     private ArrayList<String> extractFromFiles(List<Path> paths) throws IOException {
-        var contents = new ArrayList<String>();
+        ArrayList<String> contents = new ArrayList<>();
         for(Path path : paths) {
             BufferedReader reader = Files.newBufferedReader(path, Charset.forName("UTF-8"));
             contents.add(reader.readLine());
