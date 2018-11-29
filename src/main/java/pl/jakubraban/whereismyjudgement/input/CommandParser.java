@@ -52,6 +52,14 @@ public class CommandParser {
                 return functions.numberOfJudgmentsOfSpecifiedJudge(arguments[0]);
             case JUDGMENTS_BY_MONTH:
                 return functions.numberOfJudgmentsByMonth();
+            case JUDGMENTS_BY_COURT_TYPE:
+                return functions.numberOfJudgmentsByCourtType();
+            case TOP_REFERENCED_REGULATIONS:
+                if(numberOfArguments < 1) functions.getTopNReferencedRegulations(10);
+                int numberOfRegulations = Integer.parseInt(arguments[0]);
+                return functions.getTopNReferencedRegulations(numberOfRegulations);
+            case AVERAGE_JUDGES_NUMBER:
+                return functions.getAverageNumberOfJudgesPerJudgment();
             default:
                 throw new IllegalArgumentException("Bad command");
         }
