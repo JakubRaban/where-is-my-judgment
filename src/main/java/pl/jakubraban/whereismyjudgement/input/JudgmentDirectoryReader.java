@@ -11,7 +11,7 @@ import java.util.stream.Collectors;
 public class JudgmentDirectoryReader {
 
     private Path pathToJudgments;
-    public static boolean isPathSet = false;
+    private static boolean isPathSet = false;
 
     public JudgmentDirectoryReader(String path) {
         pathToJudgments = Paths.get(path);
@@ -29,6 +29,10 @@ public class JudgmentDirectoryReader {
 
     public ArrayList<String> getFilesContents() throws IOException {
         return extractFromFiles(getAllJSONs());
+    }
+
+    public static boolean isPathSet() {
+        return isPathSet;
     }
 
     private ArrayList<String> extractFromFiles(List<Path> paths) throws IOException {
