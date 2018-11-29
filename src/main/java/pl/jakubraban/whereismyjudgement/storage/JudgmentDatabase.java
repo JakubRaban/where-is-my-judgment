@@ -20,6 +20,12 @@ public class JudgmentDatabase {
         }
     }
 
+    public void add(List<Judgment> judgments) {
+        for(Judgment judgment : judgments) {
+            add(judgment);
+        }
+    }
+
     public void add(String key, Judgment judgment) {
         judgments.put(key, judgment);
     }
