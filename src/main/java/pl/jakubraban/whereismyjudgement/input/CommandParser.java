@@ -26,16 +26,13 @@ public class CommandParser {
     }
 
     public Object parse(String input) throws IOException {
-        String splitBySpacesOutsideQuotesRegex = "\\s+(?=([^\"]*\"[^\"]*\")*[^\"]*$)";
-        String[] commandParts = input.split(splitBySpacesOutsideQuotesRegex);
-        for(int i = 0; i < commandParts.length; i++)
-            commandParts[i] = commandParts[i].replaceAll("\"", "");
+        String[] commandParts = splitInputBySpacesOutsideQuotes(input);
         int numberOfArguments = commandParts.length - 1;
         String command = commandParts[0];
         String[] arguments = {};
         if(numberOfArguments > 0) arguments = Arrays.copyOfRange(commandParts, 1, numberOfArguments);
         IllegalArgumentException ex =
-                new IllegalArgumentException("Too few arguments for command" + commandParts[0]);
+                new IllegalArgumentException("Too few arguments for command " + commandParts[0]);
         switch(command) {
             case SET_PATH:
                 if(numberOfArguments < 1) throw ex;
@@ -67,5 +64,17 @@ public class CommandParser {
             default:
                 throw new IllegalArgumentException("Bad command");
         }
+    }
+
+    private String[] splitInputBySpacesOutsideQuotes(String input) {
+        String splitBySpacesOutsideQuotesRegex = "\\s+(?=([^\"]*\"[^\"]*\")*[^\"]*$)";
+        String[] commandParts = input.split(splitBySpacesOutsideQuotesRegex);
+        for(int i = 0; i < commandParts.length; i++)
+            commandParts[i] = commandParts[i].replaceAll("\"", "");
+        return commandParts;
+    }
+
+    public String getCommand(String input) {
+        return splitInputBySpacesOutsideQuotes(input)[0];
     }
 }
