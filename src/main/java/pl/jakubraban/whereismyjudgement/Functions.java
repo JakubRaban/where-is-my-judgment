@@ -5,8 +5,10 @@ import pl.jakubraban.whereismyjudgement.data.judgment.CourtType;
 import pl.jakubraban.whereismyjudgement.data.judgment.Judgment;
 import pl.jakubraban.whereismyjudgement.data.other.Regulation;
 import pl.jakubraban.whereismyjudgement.input.JudgmentDirectoryReader;
+import pl.jakubraban.whereismyjudgement.input.JudgmentJSONParser;
 import pl.jakubraban.whereismyjudgement.storage.*;
 
+import java.io.IOException;
 import java.time.Month;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -19,8 +21,17 @@ public class Functions {
 
     private JudgmentDatabase database = JudgmentDatabaseProvider.getDatabase();
 
-    public JudgmentDirectoryReader getReaderForSpecifiedPath(String path) {
-        return new JudgmentDirectoryReader(path);
+    public int getNewJudgments(String path) throws IOException {
+        JudgmentDirectoryReader reader = new JudgmentDirectoryReader(path);
+        JudgmentJSONParser parser = new JudgmentJSONParser();
+        List<String> allJsons = reader.getFilesContents();
+        int newJudgmentsCounter = 0;
+        for(String json : allJsons) {
+            List<Judgment> judgments = parser.parse(json);
+            newJudgmentsCounter += judgments.size();
+            database.add(judgments);
+        }
+        return newJudgmentsCounter;
     }
 
     public List<String> getMetrics(List<String> signatures) {
