@@ -14,7 +14,7 @@ import java.util.stream.Stream;
 import static java.util.Comparator.comparing;
 import static java.util.Comparator.reverseOrder;
 
-public class Commands {
+public class Functions {
 
     private JudgmentDatabase database = JudgmentDatabaseProvider.getDatabase();
 
@@ -72,12 +72,13 @@ public class Commands {
         return judgmentsByCourtType;
     }
 
-    public Map<Regulation, Integer> getTopNReferencedRegulations(final int N) {
-        Map<Regulation, Integer> regulationCount = new HashMap<>();
-        Map<Regulation, Integer> topRegulations = new HashMap<>();
+    public Map<String, Integer> getTopNReferencedRegulations(final int N) {
+        Map<String, Integer> regulationCount = new HashMap<>();
+        Map<String, Integer> topRegulations = new HashMap<>();
         getJudgmentsStream()
                 .map(Judgment::getReferencedRegulations)
                 .flatMap(List::stream)
+                .map(Regulation::getJournalTitle)
                 .forEach(regulation -> regulationCount.merge(regulation, 1, (a,b) -> a + b));
         regulationCount.entrySet().stream()
                 .sorted(comparing(Map.Entry::getValue, reverseOrder()))
