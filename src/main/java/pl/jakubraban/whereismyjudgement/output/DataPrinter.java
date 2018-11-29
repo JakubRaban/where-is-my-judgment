@@ -1,22 +1,25 @@
 package pl.jakubraban.whereismyjudgement.output;
 
-import java.util.*;
+import java.io.IOException;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
 
 public class DataPrinter {
 
-    public void print(Object o) {
-        if(o instanceof Map) printMap((Map) o);
+    public void print(Object o) throws IOException {
+        if(o instanceof LinkedHashMap) printMap((LinkedHashMap) o);
         if(o instanceof List) {
             for(Object s : (List) o) {
-                System.out.println(s);
+                System.out.println(s.toString());
                 System.out.println();
             }
         }
         if(o instanceof String) System.out.println((String) o);
     }
 
-    private void printMap(Map map) {
-        for(Map.Entry entry : ((Map<Object, Object>) map).entrySet()) {
+    private void printMap(LinkedHashMap map) throws IOException {
+        for(Map.Entry entry : ((LinkedHashMap<Object, Object>) map).entrySet()) {
             System.out.println(entry.getKey() + " - " + entry.getValue());
         }
     }
