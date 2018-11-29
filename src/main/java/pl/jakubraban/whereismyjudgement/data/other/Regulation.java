@@ -14,6 +14,10 @@ public class Regulation {
     private int journalEntryNumber;
     private String text;
 
+    public String getJournalTitle() {
+        return journalTitle;
+    }
+
     public int hashCode() {
         return Objects.hash(journalTitle, journalYear, journalEntryNumber, journalNumber);
     }
