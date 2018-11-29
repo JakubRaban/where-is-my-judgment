@@ -2,6 +2,10 @@ package pl.jakubraban.whereismyjudgement.input;
 
 import pl.jakubraban.whereismyjudgement.Functions;
 
+import java.util.Arrays;
+import java.util.LinkedList;
+import java.util.List;
+
 public class CommandParser {
 
     private static final String SET_PATH                   = "setPath";
@@ -14,9 +18,32 @@ public class CommandParser {
     private static final String TOP_REFERENCED_REGULATIONS = "topReferencedRegulations";
     private static final String AVERAGE_JUDGES_NUMBER      = "averageJudgesNumber";
 
-    public void parse(String command, Functions functions) {
-        switch(command) {
+    private Functions functions;
 
+    public CommandParser(Functions functions) {
+        this.functions = functions;
+    }
+
+    public void parse(String input) {
+        String[] commandParts = input.split(" ");
+        int numberOfArguments = commandParts.length - 1;
+        String command = commandParts[0];
+        String[] arguments = {};
+        if(numberOfArguments > 0) arguments = Arrays.copyOfRange(commandParts, 1, numberOfArguments);
+        IllegalArgumentException ex =
+                new IllegalArgumentException("Too few arguments for command" + commandParts[0]);
+        switch(command) {
+            case SET_PATH:
+                if(numberOfArguments < 1) throw ex;
+                functions.getReaderForSpecifiedPath(arguments[0]);
+            case GET_METRICS:
+                if(numberOfArguments < 1) throw ex;
+                List<String> metrics = new LinkedList<>(Arrays.asList(arguments));
+                functions.getMetrics(metrics);
+            case TOP_JUDGES:
+                if(numberOfArguments < 1) functions.getTopNJudges(10);
+                int numberOfJudges = Integer.parseInt(arguments[0]);
+                functions.getTopNJudges(numberOfJudges);
         }
     }
 }
