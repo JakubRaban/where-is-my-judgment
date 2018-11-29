@@ -27,6 +27,8 @@ public class CommandParser {
     public Object parse(String input) {
         String splitBySpacesOutsideQuotesRegex = "\\s+(?=([^\"]*\"[^\"]*\")*[^\"]*$)";
         String[] commandParts = input.split(splitBySpacesOutsideQuotesRegex);
+        for(int i = 0; i < commandParts.length; i++)
+            commandParts[i] = commandParts[i].replaceAll("\"", "");
         int numberOfArguments = commandParts.length - 1;
         String command = commandParts[0];
         String[] arguments = {};
