@@ -9,13 +9,15 @@ public class DataPrinter {
 
     public void print(Object o) throws IOException {
         if(o instanceof LinkedHashMap) printMap((LinkedHashMap) o);
-        if(o instanceof List) {
+        else if(o instanceof List) {
             for(Object s : (List) o) {
                 System.out.println(s.toString());
                 System.out.println();
             }
         }
-        if(o instanceof String) System.out.println((String) o);
+        else if(o instanceof String) System.out.println((String) o);
+        else System.out.println(o);
+        System.out.println();
     }
 
     private void printMap(LinkedHashMap map) throws IOException {

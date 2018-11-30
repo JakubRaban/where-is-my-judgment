@@ -99,7 +99,7 @@ public class Functions {
         return topRegulations;
     }
 
-    public Double getAverageNumberOfJudgesPerJudgment() {
+    public double getAverageNumberOfJudgesPerJudgment() {
         return getJudgmentsStream()
                 .map(Judgment::getJudges)
                 .mapToDouble(List::size)
