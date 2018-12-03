@@ -9,15 +9,15 @@ import java.util.List;
 
 public class CommandParser {
 
-    private static final String SET_PATH                   = "setPath";
-    private static final String TOP_JUDGES                 = "topJudges";
-    private static final String GET_METRICS                = "getMetrics";
-    private static final String GET_REASONS                = "getReasons";
-    private static final String GET_JUDGES_JUDGMENTS       = "howManyJudgments";
-    private static final String JUDGMENTS_BY_MONTH         = "judgmentsByMonth";
-    private static final String JUDGMENTS_BY_COURT_TYPE    = "judgmentsByCourtType";
-    private static final String TOP_REFERENCED_REGULATIONS = "topReferencedRegulations";
-    private static final String AVERAGE_JUDGES_NUMBER      = "averageJudgesNumber";
+    private static final String SET_PATH                   = "setpath";
+    private static final String TOP_JUDGES                 = "topjudges";
+    private static final String GET_METRICS                = "getmetrics";
+    private static final String GET_REASONS                = "getreasons";
+    private static final String GET_JUDGES_JUDGMENTS       = "howmanyjudgments";
+    private static final String JUDGMENTS_BY_MONTH         = "judgmentsbymonth";
+    private static final String JUDGMENTS_BY_COURT_TYPE    = "judgmentsbycourttype";
+    private static final String TOP_REFERENCED_REGULATIONS = "topreferencedregulations";
+    private static final String AVERAGE_JUDGES_NUMBER      = "averagejudgesnumber";
 
     private Functions functions;
 
@@ -33,7 +33,7 @@ public class CommandParser {
         if(numberOfArguments > 0) arguments = Arrays.copyOfRange(commandParts, 1, numberOfArguments);
         IllegalArgumentException ex =
                 new IllegalArgumentException("Too few arguments for command " + commandParts[0]);
-        switch(command) {
+        switch(command.toLowerCase()) {
             case SET_PATH:
                 if(numberOfArguments < 1) throw ex;
                 return functions.getNewJudgments(arguments[0]);
