@@ -28,8 +28,10 @@ public class Functions {
         int newJudgmentsCounter = 0;
         for(String json : allJsons) {
             List<Judgment> judgments = parser.parse(json);
-            newJudgmentsCounter += judgments.size();
-            database.add(judgments);
+            if (judgments != null) {
+                newJudgmentsCounter += judgments.size();
+                database.add(judgments);
+            }
         }
         return newJudgmentsCounter;
     }
