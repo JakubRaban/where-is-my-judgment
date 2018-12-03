@@ -39,7 +39,12 @@ public class JudgmentDirectoryReader {
         ArrayList<String> contents = new ArrayList<>();
         for(Path path : paths) {
             BufferedReader reader = Files.newBufferedReader(path, Charset.forName("UTF-8"));
-            contents.add(reader.readLine());
+            String line;
+            StringBuilder allLines = new StringBuilder();
+            while((line = reader.readLine()) != null) {
+                allLines.append(line);
+            }
+            contents.add(allLines.toString());
             reader.close();
         }
         return contents;
