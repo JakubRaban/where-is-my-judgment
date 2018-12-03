@@ -14,25 +14,22 @@ import java.util.LinkedList;
 
 public class JudgmentJSONParser {
 
-    public LinkedList<Judgment> parse(String json) {
-        try {
-            String properJson = dropMetadata(json);
-            Type judgmentListType = new TypeToken<LinkedList<Judgment>>(){}.getType();
-            Gson gson = new GsonBuilder().registerTypeAdapter(Calendar.class, (JsonDeserializer<Calendar>) (element, arg1, arg2) -> {
-                String date = element.getAsString();
-                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-                try {
-                    Calendar cal = Calendar.getInstance();
-                    cal.setTime(sdf.parse(date));
-                    return cal;
-                } catch (ParseException e) {
-                    return null;
-                }
-            }).create();
-            return gson.fromJson(properJson, judgmentListType);
-        } catch (ParseException e) {
-            return null;
-        }
+    public LinkedList<Judgment> parse(String json) throws ParseException {
+        String properJson = dropMetadata(json);
+        Type judgmentListType = new TypeToken<LinkedList<Judgment>>() {
+        }.getType();
+        Gson gson = new GsonBuilder().registerTypeAdapter(Calendar.class, (JsonDeserializer<Calendar>) (element, arg1, arg2) -> {
+            String date = element.getAsString();
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+            try {
+                Calendar cal = Calendar.getInstance();
+                cal.setTime(sdf.parse(date));
+                return cal;
+            } catch (ParseException e) {
+                return null;
+            }
+        }).create();
+        return gson.fromJson(properJson, judgmentListType);
     }
 
     private String dropMetadata(String parsedJson) throws ParseException {

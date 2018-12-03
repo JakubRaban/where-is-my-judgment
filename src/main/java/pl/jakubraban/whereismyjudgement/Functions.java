@@ -9,6 +9,7 @@ import pl.jakubraban.whereismyjudgement.input.JudgmentJSONParser;
 import pl.jakubraban.whereismyjudgement.storage.*;
 
 import java.io.IOException;
+import java.text.ParseException;
 import java.time.Month;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -27,10 +28,12 @@ public class Functions {
         List<String> allJsons = reader.getFilesContents();
         int newJudgmentsCounter = 0;
         for(String json : allJsons) {
-            List<Judgment> judgments = parser.parse(json);
-            if (judgments != null) {
+            try {
+                List<Judgment> judgments = parser.parse(json);
                 newJudgmentsCounter += judgments.size();
                 database.add(judgments);
+            } catch (ParseException e) {
+                System.out.println("Zły plik orzeczenia - nie dodano");
             }
         }
         return newJudgmentsCounter;
