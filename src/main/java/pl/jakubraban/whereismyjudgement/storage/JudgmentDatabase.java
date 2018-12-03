@@ -4,6 +4,7 @@ import pl.jakubraban.whereismyjudgement.data.judgment.CourtCaseReference;
 import pl.jakubraban.whereismyjudgement.data.judgment.Judgment;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class JudgmentDatabase {
 
@@ -40,7 +41,9 @@ public class JudgmentDatabase {
     }
 
     public List<Judgment> getAllJudgments() {
-        return new LinkedList<>(judgments.values());
+        return judgments.values().stream()
+                .distinct()
+                .collect(Collectors.toList());
     }
 
     public int size() {
