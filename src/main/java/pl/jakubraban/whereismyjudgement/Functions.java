@@ -12,7 +12,6 @@ import java.io.IOException;
 import java.text.ParseException;
 import java.time.Month;
 import java.util.*;
-import java.util.stream.Collector;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -81,7 +80,7 @@ public class Functions {
     }
 
     public Map<CourtType, Integer> numberOfJudgmentsByCourtType() {
-        Map<CourtType, Integer> judgmentsByCourtType = new HashMap<>();
+        Map<CourtType, Integer> judgmentsByCourtType = new LinkedHashMap<>();
         getJudgmentsStream()
                 .map(Judgment::getCourtType)
                 .forEach(courtType -> judgmentsByCourtType.merge(courtType, 1, (a,b) -> a + b));
