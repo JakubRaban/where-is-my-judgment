@@ -12,6 +12,7 @@ import java.io.IOException;
 import java.text.ParseException;
 import java.time.Month;
 import java.util.*;
+import java.util.stream.Collector;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -40,11 +41,9 @@ public class Functions {
     }
 
     public List<String> getMetrics(List<String> signatures) {
-        List<Judgment> judgments = new LinkedList<>();
-        for(String signature : signatures) {
-            judgments.add(database.search(signature));
-        }
-        return judgments.stream()
+        return signatures.stream()
+                .map(signature -> database.search(signature))
+                .distinct()
                 .map(Judgment::getMetric)
                 .collect(Collectors.toList());
     }
