@@ -31,9 +31,8 @@ public class JudgmentDatabase {
     }
 
     public Judgment search(String signature) {
-        Judgment foundJudgment = judgments.get(signature);
-        if(foundJudgment == null) throw new NoSuchElementException();
-        return foundJudgment;
+        Optional<Judgment> judgment = Optional.of(judgments.get(signature));
+        return judgment.orElseThrow(NoSuchElementException::new);
     }
 
     public Judgment remove(String signature) {
