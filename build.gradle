@@ -1,0 +1,19 @@
+plugins {
+    id 'java'
+}
+
+group 'pl.jakubraban.whereismyjudgement'
+version '1.0-SNAPSHOT'
+
+sourceCompatibility = 1.8
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    testCompile group: 'junit', name: 'junit', version: '4.12'
+    implementation 'com.google.code.gson:gson:2.8.5'
+    compile 'org.jsoup:jsoup:1.11.3'
+    compile 'org.jline:jline:3.9.0'
+}
