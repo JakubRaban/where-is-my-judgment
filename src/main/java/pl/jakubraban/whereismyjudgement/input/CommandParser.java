@@ -18,6 +18,7 @@ public class CommandParser {
     private static final String JUDGMENTS_BY_COURT_TYPE    = "judgmentsbycourttype";
     private static final String TOP_REFERENCED_REGULATIONS = "topreferencedregulations";
     private static final String AVERAGE_JUDGES_NUMBER      = "averagejudgesnumber";
+    private static final String EXIT                       = "exit";
 
     private Functions functions;
 
@@ -61,6 +62,8 @@ public class CommandParser {
                 return functions.getTopNReferencedRegulations(numberOfRegulations);
             case AVERAGE_JUDGES_NUMBER:
                 return functions.getAverageNumberOfJudgesPerJudgment();
+            case EXIT:
+                functions.exit();
             default:
                 throw new IllegalArgumentException("Bad command");
         }

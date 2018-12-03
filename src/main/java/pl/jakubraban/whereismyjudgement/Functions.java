@@ -109,6 +109,10 @@ public class Functions {
                 .orElse(-1);
     }
 
+    public void exit() {
+        System.exit(0);
+    }
+
     private Stream<Judge> getJudgeStream() {
         return getJudgmentsStream()
                 .map(Judgment::getJudges)
