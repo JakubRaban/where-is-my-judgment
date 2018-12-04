@@ -14,7 +14,6 @@ public class DataPrinter {
         else if(o instanceof List) {
             for(Object s : (List) o) {
                 System.out.println(s.toString());
-                System.out.println();
             }
         }
         else if(o instanceof String) System.out.println((String) o);
