@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class CommandParser {
 
@@ -30,8 +31,10 @@ public class CommandParser {
         String[] commandParts = splitInputBySpacesOutsideQuotes(input);
         int numberOfArguments = commandParts.length - 1;
         String command = commandParts[0];
-        String[] arguments = {};
-        if(numberOfArguments > 0) arguments = Arrays.copyOfRange(commandParts, 1, numberOfArguments);
+        String[] arguments = new String[numberOfArguments];
+        for(int i = 0; i < numberOfArguments; i++) {
+            arguments[i] = commandParts[i + 1];
+        }
         IllegalArgumentException ex =
                 new IllegalArgumentException("Too few arguments for command " + commandParts[0]);
         switch(command.toLowerCase()) {
@@ -43,7 +46,7 @@ public class CommandParser {
                 List<String> metrics = new LinkedList<>(Arrays.asList(arguments));
                 return functions.getMetrics(metrics);
             case TOP_JUDGES:
-                if(numberOfArguments < 1) functions.getTopNJudges(10);
+                if(numberOfArguments < 1) return functions.getTopNJudges(10);
                 int numberOfJudges = Integer.parseInt(arguments[0]);
                 return functions.getTopNJudges(numberOfJudges);
             case GET_REASONS:
@@ -57,7 +60,7 @@ public class CommandParser {
             case JUDGMENTS_BY_COURT_TYPE:
                 return functions.numberOfJudgmentsByCourtType();
             case TOP_REFERENCED_REGULATIONS:
-                if(numberOfArguments < 1) functions.getTopNReferencedRegulations(10);
+                if(numberOfArguments < 1) return functions.getTopNReferencedRegulations(10);
                 int numberOfRegulations = Integer.parseInt(arguments[0]);
                 return functions.getTopNReferencedRegulations(numberOfRegulations);
             case AVERAGE_JUDGES_NUMBER:
@@ -79,5 +82,9 @@ public class CommandParser {
 
     public String getCommand(String input) {
         return splitInputBySpacesOutsideQuotes(input)[0];
+    }
+
+    public List<String> getArguments(String input) {
+        return Arrays.stream(splitInputBySpacesOutsideQuotes(input)).skip(1).collect(Collectors.toList());
     }
 }
