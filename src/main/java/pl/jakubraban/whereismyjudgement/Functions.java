@@ -43,12 +43,14 @@ public class Functions {
         return signatures.stream()
                 .map(signature -> database.search(signature))
                 .distinct()
+                .filter(Optional::isPresent)
+                .flatMap(Optional::stream)
                 .map(Judgment::getMetric)
                 .collect(Collectors.toList());
     }
 
     public String getReasons(String signature) {
-        return database.search(signature).getReasons();
+        return database.search(signature).orElseThrow(NoSuchElementException::new).getReasons();
     }
 
     public Integer numberOfJudgmentsOfSpecifiedJudge(String judgeName) {
@@ -57,10 +59,11 @@ public class Functions {
                 .count();
     }
 
-    public LinkedHashMap<Judge, Integer> getTopNJudges(final int N) {
-        Map<Judge, Integer> judgeCount = new HashMap<>();
-        LinkedHashMap<Judge, Integer> topJudges = new LinkedHashMap<>();
+    public LinkedHashMap<String, Integer> getTopNJudges(final int N) {
+        Map<String, Integer> judgeCount = new HashMap<>();
+        LinkedHashMap<String, Integer> topJudges = new LinkedHashMap<>();
         getJudgeStream()
+                .map(Judge::getName)
                 .forEach(judge -> judgeCount.merge(judge, 1, (a,b) -> a + b));
         judgeCount.entrySet().stream()
                 .sorted(comparing(Map.Entry::getValue, reverseOrder()))
