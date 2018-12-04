@@ -31,9 +31,8 @@ public class JudgmentDatabase {
         judgments.put(key, judgment);
     }
 
-    public Judgment search(String signature) {
-        Optional<Judgment> judgment = Optional.of(judgments.get(signature));
-        return judgment.orElseThrow(NoSuchElementException::new);
+    public Optional<Judgment> search(String signature) {
+        return Optional.of(judgments.get(signature));
     }
 
     public Judgment remove(String signature) {
@@ -48,6 +47,10 @@ public class JudgmentDatabase {
 
     public int size() {
         return judgments.size();
+    }
+
+    public Map<String, Judgment> getMap() {
+        return judgments;
     }
 
 }
