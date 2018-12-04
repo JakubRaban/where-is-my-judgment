@@ -73,7 +73,8 @@ public class Functions {
     }
 
     public Map<Month, Integer> numberOfJudgmentsByMonth() {
-        Map<Month, Integer> judgmentsByMonth = new HashMap<>();
+        Map<Month, Integer> judgmentsByMonth = new LinkedHashMap<>();
+        for(Month month : Month.values()) judgmentsByMonth.put(month, 0);
         getJudgmentsStream()
                 .map(Judgment::getJudgmentDate)
                 .map(calendar -> calendar.get(Calendar.MONTH))
