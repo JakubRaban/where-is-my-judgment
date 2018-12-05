@@ -39,18 +39,26 @@ public class Functions {
         return newJudgmentsCounter;
     }
 
-    public List<String> getMetrics(List<String> signatures) {
-        return signatures.stream()
-                .map(signature -> database.search(signature))
-                .distinct()
-                .filter(Optional::isPresent)
-                .flatMap(Optional::stream)
-                .map(Judgment::getMetric)
-                .collect(Collectors.toList());
+    public FunctionResult getMetrics(List<String> signatures) {
+        List<String> result = new LinkedList<>();
+        List<String> erroneousSignatures = new LinkedList<>();
+        signatures
+                .forEach(signature -> {
+                    Optional<Judgment> searchResult = database.search(signature);
+                    if(searchResult.isPresent()) {
+                        result.add(searchResult.orElseThrow().getReasons());
+                    } else {
+                        erroneousSignatures.add(signature);
+                    }
+                });
+        return new FunctionResult(result, erroneousSignatures, "Judgment");
     }
 
-    public String getReasons(String signature) {
-        return database.search(signature).orElseThrow(NoSuchElementException::new).getReasons();
+    public FunctionResult getReasons(String signature) {
+        Optional<Judgment> searchResult = database.search(signature);
+        return searchResult.isPresent() ?
+                new FunctionResult(searchResult.orElseThrow().getReasons()) :
+                new FunctionResult(null, Collections.singletonList(signature), "Judgment");
     }
 
     public Integer numberOfJudgmentsOfSpecifiedJudge(String judgeName) {
