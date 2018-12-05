@@ -22,7 +22,7 @@ public class Functions {
 
     private JudgmentDatabase database = JudgmentDatabaseProvider.getDatabase();
 
-    public int getNewJudgments(String path) throws IOException {
+    public void getNewJudgments(String path) throws IOException {
         JudgmentDirectoryReader reader = new JudgmentDirectoryReader(path);
         JudgmentJSONParser parser = new JudgmentJSONParser();
         List<String> allJsons = reader.getFilesContents();
@@ -36,21 +36,19 @@ public class Functions {
                 System.out.println("Zły plik orzeczenia - nie dodano");
             }
         }
-        return newJudgmentsCounter;
     }
 
     public FunctionResult getMetrics(List<String> signatures) {
         List<String> result = new LinkedList<>();
         List<String> erroneousSignatures = new LinkedList<>();
-        signatures
-                .forEach(signature -> {
-                    Optional<Judgment> searchResult = database.search(signature);
-                    if(searchResult.isPresent()) {
-                        result.add(searchResult.orElseThrow().getReasons());
-                    } else {
-                        erroneousSignatures.add(signature);
-                    }
-                });
+        signatures.forEach(signature -> {
+            Optional<Judgment> searchResult = database.search(signature);
+            if (searchResult.isPresent()) {
+                result.add(searchResult.orElseThrow().getMetric());
+            } else {
+                erroneousSignatures.add(signature);
+            }
+        });
         return new FunctionResult(result, erroneousSignatures, "Judgment");
     }
 
