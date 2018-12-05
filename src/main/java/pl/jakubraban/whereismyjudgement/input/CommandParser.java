@@ -1,5 +1,6 @@
 package pl.jakubraban.whereismyjudgement.input;
 
+import pl.jakubraban.whereismyjudgement.FunctionResult;
 import pl.jakubraban.whereismyjudgement.Functions;
 
 import java.io.IOException;
@@ -27,7 +28,7 @@ public class CommandParser {
         this.functions = functions;
     }
 
-    public Object parse(String input) throws IOException {
+    public FunctionResult parse(String input) throws IOException {
         String[] commandParts = splitInputBySpacesOutsideQuotes(input);
         int numberOfArguments = commandParts.length - 1;
         String command = commandParts[0];
@@ -40,7 +41,8 @@ public class CommandParser {
         switch(command.toLowerCase()) {
             case SET_PATH:
                 if(numberOfArguments < 1) throw ex;
-                return functions.getNewJudgments(arguments[0]);
+                functions.getNewJudgments(arguments[0]);
+                return FunctionResult.NONE;
             case GET_METRICS:
                 if(numberOfArguments < 1) throw ex;
                 List<String> metrics = new LinkedList<>(Arrays.asList(arguments));
