@@ -1,6 +1,7 @@
 package pl.jakubraban.whereismyjudgement.data.judge;
 
-import java.util.Iterator;
+import pl.jakubraban.whereismyjudgement.Utilities;
+
 import java.util.List;
 import java.util.Objects;
 
@@ -19,14 +20,7 @@ public class Judge {
         if(function != null) sb.append(function).append(" ");
         sb.append(name);
         if(specialRoles.size() > 0) sb.append(" - ");
-        Iterator<JudgeRole> iterator = specialRoles.iterator();
-        while(iterator.hasNext()) {
-            JudgeRole currentRole = iterator.next();
-            if(currentRole != null) {
-                sb.append(currentRole);
-                if(iterator.hasNext()) sb.append(", ");
-            }
-        }
+        sb.append(Utilities.getListWithCommas(specialRoles));
         return sb.toString();
     }
 
