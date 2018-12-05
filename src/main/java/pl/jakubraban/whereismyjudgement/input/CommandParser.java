@@ -41,8 +41,7 @@ public class CommandParser {
         switch(command.toLowerCase()) {
             case SET_PATH:
                 if(numberOfArguments < 1) throw ex;
-                functions.getNewJudgments(arguments[0]);
-                return FunctionResult.NONE;
+                return functions.getNewJudgments(arguments[0]);
             case GET_METRICS:
                 if(numberOfArguments < 1) throw ex;
                 List<String> metrics = new LinkedList<>(Arrays.asList(arguments));
