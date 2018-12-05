@@ -6,7 +6,7 @@ import java.util.*;
 
 public class DataPrinter {
 
-    public String print(Object o) {
+    private String print(Object o) {
         if(o instanceof LinkedHashMap) return printMap((LinkedHashMap) o);
         else if(o instanceof HashMap) return printMap ((HashMap) o);
         else if(o instanceof List) {
@@ -37,15 +37,18 @@ public class DataPrinter {
     }
 
     public String print(FunctionResult result) {
+        if(result.equals(FunctionResult.NONE)) return "";
         Optional<Object> objectToPrint = Optional.ofNullable(result.getResult());
         List<String> erroneousInput = result.getErroneousInput();
         String affectedClass = result.getAffectedClass();
         StringBuilder printedResult = new StringBuilder();
-        if(objectToPrint.isPresent()) {
+        if (objectToPrint.isPresent()) {
             printedResult.append(print(objectToPrint.orElseThrow()));
-            if(!erroneousInput.isEmpty()) {
-
-            }
+        }
+        if (!erroneousInput.isEmpty()) {
+            printedResult.append("BŁĄD: Żadna instancja ").append(affectedClass)
+                    .append(" nie wynika z użycia ")
+                    .append(erroneousInput.toString());
         }
         return printedResult.toString();
     }
