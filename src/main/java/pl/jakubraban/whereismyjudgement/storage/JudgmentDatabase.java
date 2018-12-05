@@ -32,7 +32,7 @@ public class JudgmentDatabase {
     }
 
     public Optional<Judgment> search(String signature) {
-        return Optional.of(judgments.get(signature));
+        return Optional.ofNullable(judgments.get(signature));
     }
 
     public Judgment remove(String signature) {
