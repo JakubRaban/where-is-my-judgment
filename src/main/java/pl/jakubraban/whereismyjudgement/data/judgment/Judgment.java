@@ -1,9 +1,7 @@
 package pl.jakubraban.whereismyjudgement.data.judgment;
 
 import com.google.gson.annotations.SerializedName;
-import org.jsoup.Jsoup;
-import org.jsoup.nodes.Document;
-import org.jsoup.safety.Whitelist;
+import pl.jakubraban.whereismyjudgement.Utilities;
 import pl.jakubraban.whereismyjudgement.data.judge.Judge;
 import pl.jakubraban.whereismyjudgement.data.other.DissentingOpinion;
 import pl.jakubraban.whereismyjudgement.data.other.Regulation;
@@ -65,7 +63,7 @@ public class Judgment {
         int index = textContent.toLowerCase().indexOf("uzasadnienie");
         if(index == -1) index = textContent.toLowerCase().indexOf("u z a s a d n i e n i e");
         String extractedReasons = textContent.substring(index);
-        return dropHTMLTags(extractedReasons);
+        return Utilities.dropHTMLTags(extractedReasons);
     }
 
     public List<CourtCaseReference> getConcernedCourtCases() {
@@ -86,15 +84,6 @@ public class Judgment {
 
     public List<Regulation> getReferencedRegulations() {
         return referencedRegulations;
-    }
-
-    private String dropHTMLTags(String html) {
-        Document document = Jsoup.parse(html);
-        document.outputSettings(new Document.OutputSettings().prettyPrint(false));
-        document.select("br").append("\\n");
-        // document.select("p").prepend("\\n");
-        String s = document.html().replaceAll("\\\\n", "\n");
-        return Jsoup.clean(s, "", Whitelist.none(), new Document.OutputSettings().prettyPrint(false));
     }
 
 }

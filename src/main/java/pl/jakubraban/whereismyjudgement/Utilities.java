@@ -1,5 +1,9 @@
 package pl.jakubraban.whereismyjudgement;
 
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.safety.Whitelist;
+
 import java.util.Iterator;
 import java.util.List;
 
@@ -18,4 +22,12 @@ public class Utilities {
         return sb.toString();
     }
 
+    public static String dropHTMLTags(String html) {
+        Document document = Jsoup.parse(html);
+        document.outputSettings(new Document.OutputSettings().prettyPrint(false));
+        document.select("br").append("\\n");
+        String s = document.html().replaceAll("\\\\n", "\n");
+        String tagClean = Jsoup.clean(s, "", Whitelist.none(), new Document.OutputSettings().prettyPrint(false));
+        return tagClean.replaceAll("\n\n", "\n\"");
+    }
 }
