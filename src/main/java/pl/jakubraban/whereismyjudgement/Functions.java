@@ -84,7 +84,7 @@ public class Functions {
     }
 
     public Map<CourtType, Integer> numberOfJudgmentsByCourtType() {
-        Map<CourtType, Integer> judgmentsByCourtType = new LinkedHashMap<>();
+        Map<CourtType, Integer> judgmentsByCourtType = new HashMap<>();
         getJudgmentsStream()
                 .map(Judgment::getCourtType)
                 .forEach(courtType -> judgmentsByCourtType.merge(courtType, 1, (a,b) -> a + b));
