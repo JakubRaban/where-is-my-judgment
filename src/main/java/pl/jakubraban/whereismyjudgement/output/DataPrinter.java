@@ -1,36 +1,56 @@
 package pl.jakubraban.whereismyjudgement.output;
 
-import java.io.IOException;
-import java.util.HashMap;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
+import pl.jakubraban.whereismyjudgement.FunctionResult;
+
+import java.util.*;
 
 public class DataPrinter {
 
-    public void print(Object o) throws IOException {
-        if(o instanceof LinkedHashMap) printMap((LinkedHashMap) o);
-        else if(o instanceof HashMap) printMap ((HashMap) o);
+    private String print(Object o) {
+        if(o instanceof LinkedHashMap) return printMap((LinkedHashMap) o);
+        else if(o instanceof HashMap) return printMap ((HashMap) o);
         else if(o instanceof List) {
+            StringBuilder sb = new StringBuilder();
             for(Object s : (List) o) {
-                System.out.println(s.toString());
+                sb.append(s.toString()).append("\n");
             }
+            return sb.toString();
         }
-        else if(o instanceof String) System.out.println((String) o);
-        else System.out.println(o);
-        System.out.println();
+        else if(o instanceof String) return o + "\n";
+        else return o.toString() + "\n";
     }
 
-    private void printMap(LinkedHashMap map) throws IOException {
+    private String printMap(LinkedHashMap map) {
+        StringBuilder sb = new StringBuilder();
         for(Map.Entry entry : ((LinkedHashMap<Object, Object>) map).entrySet()) {
-            System.out.println(entry.getKey() + " - " + entry.getValue());
+            sb.append(entry.getKey()).append(" - ").append(entry.getValue()).append("\n");
         }
+        return sb.toString();
     }
 
-    private void printMap(HashMap map) {
+    private String printMap(HashMap map) {
+        StringBuilder sb = new StringBuilder();
         for(Map.Entry entry : ((HashMap<Object, Object>) map).entrySet()) {
-            System.out.println(entry.getKey() + " - " + entry.getValue());
+            sb.append(entry.getKey()).append(" - ").append(entry.getValue()).append("\n");
         }
+        return sb.toString();
+    }
+
+    public String print(FunctionResult result) {
+        if(result.equals(FunctionResult.NONE)) return "";
+        Optional<Object> objectToPrint = Optional.ofNullable(result.getResult());
+        List<String> erroneousInput = result.getErroneousInput();
+        String affectedClass = result.getAffectedClass();
+        StringBuilder printedResult = new StringBuilder();
+        if (objectToPrint.isPresent()) {
+            printedResult.append(print(objectToPrint.orElseThrow()));
+        }
+        if (!erroneousInput.isEmpty()) {
+            printedResult.append("BŁĄD: Żadna instancja ").append(affectedClass)
+                    .append(" nie wynika z użycia ")
+                    .append(erroneousInput.toString());
+        }
+        return printedResult.toString();
     }
 
 }
