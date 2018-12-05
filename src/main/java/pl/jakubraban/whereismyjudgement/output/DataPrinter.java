@@ -1,6 +1,7 @@
 package pl.jakubraban.whereismyjudgement.output;
 
 import pl.jakubraban.whereismyjudgement.FunctionResult;
+import pl.jakubraban.whereismyjudgement.Utilities;
 
 import java.util.*;
 
@@ -47,8 +48,8 @@ public class DataPrinter {
         }
         if (!erroneousInput.isEmpty()) {
             printedResult.append("BŁĄD: Żadna instancja ").append(affectedClass)
-                    .append(" nie wynika z użycia ")
-                    .append(erroneousInput.toString());
+                    .append(" nie wynika z użycia nazw(y) ")
+                    .append(Utilities.getListWithCommas(erroneousInput));
         }
         return printedResult.toString();
     }
