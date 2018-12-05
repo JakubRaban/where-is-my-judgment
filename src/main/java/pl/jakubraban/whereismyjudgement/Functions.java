@@ -6,13 +6,13 @@ import pl.jakubraban.whereismyjudgement.data.judgment.Judgment;
 import pl.jakubraban.whereismyjudgement.data.other.Regulation;
 import pl.jakubraban.whereismyjudgement.input.JudgmentDirectoryReader;
 import pl.jakubraban.whereismyjudgement.input.JudgmentJSONParser;
-import pl.jakubraban.whereismyjudgement.storage.*;
+import pl.jakubraban.whereismyjudgement.storage.JudgmentDatabase;
+import pl.jakubraban.whereismyjudgement.storage.JudgmentDatabaseProvider;
 
 import java.io.IOException;
 import java.text.ParseException;
 import java.time.Month;
 import java.util.*;
-import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import static java.util.Comparator.comparing;
@@ -61,13 +61,14 @@ public class Functions {
                 new FunctionResult(null, Collections.singletonList(signature), "Judgment");
     }
 
-    public Integer numberOfJudgmentsOfSpecifiedJudge(String judgeName) {
-        return (int) getJudgeStream()
+    public FunctionResult numberOfJudgmentsOfSpecifiedJudge(String judgeName) {
+        int numberOfJudgments = (int) getJudgeStream()
                 .filter(judge -> judge.getName().equals(judgeName))
                 .count();
+        return new FunctionResult(numberOfJudgments);
     }
 
-    public LinkedHashMap<String, Integer> getTopNJudges(final int N) {
+    public FunctionResult getTopNJudges(final int N) {
         Map<String, Integer> judgeCount = new HashMap<>();
         LinkedHashMap<String, Integer> topJudges = new LinkedHashMap<>();
         getJudgeStream()
@@ -77,10 +78,10 @@ public class Functions {
                 .sorted(comparing(Map.Entry::getValue, reverseOrder()))
                 .limit(N)
                 .forEach(entry -> topJudges.put(entry.getKey(), entry.getValue()));
-        return topJudges;
+        return new FunctionResult(topJudges);
     }
 
-    public Map<Month, Integer> numberOfJudgmentsByMonth() {
+    public FunctionResult numberOfJudgmentsByMonth() {
         Map<Month, Integer> judgmentsByMonth = new LinkedHashMap<>();
         for(Month month : Month.values()) judgmentsByMonth.put(month, 0);
         getJudgmentsStream()
@@ -88,18 +89,18 @@ public class Functions {
                 .map(calendar -> calendar.get(Calendar.MONTH))
                 .map(Month::of)
                 .forEach(month -> judgmentsByMonth.merge(month, 1, (a,b) -> a + b));
-        return judgmentsByMonth;
+        return new FunctionResult(judgmentsByMonth);
     }
 
-    public Map<CourtType, Integer> numberOfJudgmentsByCourtType() {
+    public FunctionResult numberOfJudgmentsByCourtType() {
         Map<CourtType, Integer> judgmentsByCourtType = new HashMap<>();
         getJudgmentsStream()
                 .map(Judgment::getCourtType)
                 .forEach(courtType -> judgmentsByCourtType.merge(courtType, 1, (a,b) -> a + b));
-        return judgmentsByCourtType;
+        return new FunctionResult(judgmentsByCourtType);
     }
 
-    public LinkedHashMap<String, Integer> getTopNReferencedRegulations(final int N) {
+    public FunctionResult getTopNReferencedRegulations(final int N) {
         Map<String, Integer> regulationCount = new HashMap<>();
         LinkedHashMap<String, Integer> topRegulations = new LinkedHashMap<>();
         getJudgmentsStream()
@@ -111,15 +112,15 @@ public class Functions {
                 .sorted(comparing(Map.Entry::getValue, reverseOrder()))
                 .limit(N)
                 .forEach(entry -> topRegulations.put(entry.getKey(), entry.getValue()));
-        return topRegulations;
+        return new FunctionResult(topRegulations);
     }
 
-    public double getAverageNumberOfJudgesPerJudgment() {
-        return getJudgmentsStream()
+    public FunctionResult getAverageNumberOfJudgesPerJudgment() {
+        return new FunctionResult(getJudgmentsStream()
                 .map(Judgment::getJudges)
                 .mapToDouble(List::size)
                 .average()
-                .orElse(-1);
+                .orElse(-1));
     }
 
     public void exit() {
