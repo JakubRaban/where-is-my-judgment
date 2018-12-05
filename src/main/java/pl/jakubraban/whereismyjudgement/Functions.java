@@ -22,7 +22,7 @@ public class Functions {
 
     private JudgmentDatabase database = JudgmentDatabaseProvider.getDatabase();
 
-    public void getNewJudgments(String path) throws IOException {
+    public FunctionResult getNewJudgments(String path) throws IOException {
         JudgmentDirectoryReader reader = new JudgmentDirectoryReader(path);
         JudgmentJSONParser parser = new JudgmentJSONParser();
         List<String> allJsons = reader.getFilesContents();
@@ -36,6 +36,7 @@ public class Functions {
                 System.out.println("Zły plik orzeczenia - nie dodano");
             }
         }
+        return new FunctionResult(newJudgmentsCounter);
     }
 
     public FunctionResult getMetrics(List<String> signatures) {
@@ -61,7 +62,7 @@ public class Functions {
 
     public FunctionResult numberOfJudgmentsOfSpecifiedJudge(String judgeName) {
         int numberOfJudgments = (int) getJudgeStream()
-                .filter(judge -> judge.getName().equals(judgeName))
+                .filter(judge -> judge.getName().toLowerCase().equals(judgeName.toLowerCase()))
                 .count();
         return new FunctionResult(numberOfJudgments);
     }
