@@ -84,7 +84,7 @@ public class Functions {
         for(Month month : Month.values()) judgmentsByMonth.put(month, 0);
         getJudgmentsStream()
                 .map(Judgment::getJudgmentDate)
-                .map(calendar -> calendar.get(Calendar.MONTH))
+                .map(calendar -> calendar.get(Calendar.MONTH) + 1)
                 .map(Month::of)
                 .forEach(month -> judgmentsByMonth.merge(month, 1, (a,b) -> a + b));
         return new FunctionResult(judgmentsByMonth);
