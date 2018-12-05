@@ -5,9 +5,12 @@ import java.util.List;
 
 public class FunctionResult {
 
+    public static final FunctionResult NONE = new FunctionResult();
     private Object result;
     private List<String> erroneousInput;
     private String affectedClass;
+
+    private FunctionResult() { }
 
     FunctionResult(Object result) {
         this.result = result;
