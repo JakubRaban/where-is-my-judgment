@@ -24,7 +24,7 @@ public class FunctionResultFormatter {
     private String getFormattedMap(LinkedHashMap map) {
         StringBuilder sb = new StringBuilder();
         for(Map.Entry entry : ((LinkedHashMap<Object, Object>) map).entrySet()) {
-            sb.append(entry.getKey()).append(" - ").append(entry.getValue()).append("\n");
+            sb.append(entry.getKey()).append(" -- ").append(entry.getValue()).append("\n");
         }
         return sb.toString();
     }
@@ -32,7 +32,7 @@ public class FunctionResultFormatter {
     private String getFormattedMap(HashMap map) {
         StringBuilder sb = new StringBuilder();
         for(Map.Entry entry : ((HashMap<Object, Object>) map).entrySet()) {
-            sb.append(entry.getKey()).append(" - ").append(entry.getValue()).append("\n");
+            sb.append(entry.getKey()).append(" -- ").append(entry.getValue()).append("\n");
         }
         return sb.toString();
     }
@@ -49,7 +49,8 @@ public class FunctionResultFormatter {
         if (!erroneousInput.isEmpty()) {
             printedResult.append("BŁĄD: Żadna instancja ").append(affectedClass)
                     .append(" nie wynika z użycia nazw(y) ")
-                    .append(Utilities.getListWithCommas(erroneousInput));
+                    .append(Utilities.getListWithCommas(erroneousInput))
+                    .append("\n");
         }
         return printedResult.toString();
     }
