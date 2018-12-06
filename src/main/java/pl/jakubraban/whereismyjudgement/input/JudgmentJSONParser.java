@@ -34,7 +34,7 @@ public class JudgmentJSONParser {
 
     private String dropMetadata(String parsedJson) throws ParseException {
         int start = parsedJson.indexOf("items") + 7;
-        int end = parsedJson.indexOf("queryTemplate") - 2; // TODO wyjątek kiedy JSON to nie wyrok
+        int end = parsedJson.indexOf("queryTemplate") - 2;
         if(start == 6 || end == -3) throw new ParseException("The file is not a proper judgment JSON", 0);
         return parsedJson.substring(start, end);
     }
