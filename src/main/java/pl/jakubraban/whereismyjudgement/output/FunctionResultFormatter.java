@@ -8,8 +8,8 @@ import java.util.*;
 public class FunctionResultFormatter {
 
     private String format(Object o) {
-        if(o instanceof LinkedHashMap) return getFormattedMap((LinkedHashMap) o);
-        else if(o instanceof HashMap) return getFormattedMap((HashMap) o);
+        // if(o instanceof LinkedHashMap) return getFormattedMap((LinkedHashMap) o);
+        if(o instanceof HashMap) return getFormattedMap((HashMap) o);
         else if(o instanceof List) {
             StringBuilder sb = new StringBuilder();
             for(Object s : (List) o) {
@@ -19,14 +19,6 @@ public class FunctionResultFormatter {
         }
         else if(o instanceof String) return o + "\n";
         else return o.toString() + "\n";
-    }
-
-    private String getFormattedMap(LinkedHashMap map) {
-        StringBuilder sb = new StringBuilder();
-        for(Map.Entry entry : ((LinkedHashMap<Object, Object>) map).entrySet()) {
-            sb.append(entry.getKey()).append(" -- ").append(entry.getValue()).append("\n");
-        }
-        return sb.toString();
     }
 
     private String getFormattedMap(HashMap map) {
