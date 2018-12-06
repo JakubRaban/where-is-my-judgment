@@ -28,6 +28,6 @@ public class Utilities {
         document.select("br").append("\\n");
         String s = document.html().replaceAll("\\\\n", "\n");
         String tagClean = Jsoup.clean(s, "", Whitelist.none(), new Document.OutputSettings().prettyPrint(false));
-        return tagClean.replaceAll("\n\n", "\n\"");
+        return tagClean.replaceAll("\n\n", "\n");
     }
 }
