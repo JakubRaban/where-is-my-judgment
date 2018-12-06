@@ -5,10 +5,13 @@ import pl.jakubraban.whereismyjudgement.Utilities;
 import pl.jakubraban.whereismyjudgement.data.judge.Judge;
 import pl.jakubraban.whereismyjudgement.data.other.DissentingOpinion;
 import pl.jakubraban.whereismyjudgement.data.other.Regulation;
+import pl.jakubraban.whereismyjudgement.storage.JudgmentDatabase;
+import pl.jakubraban.whereismyjudgement.storage.JudgmentDatabaseProvider;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.List;
+import java.util.Optional;
 
 public class Judgment {
 
@@ -62,8 +65,20 @@ public class Judgment {
     public String getReasons() {
         int index = textContent.toLowerCase().indexOf("uzasadnienie");
         if(index == -1) index = textContent.toLowerCase().indexOf("u z a s a d n i e n i e");
+        if(index == -1) {
+            JudgmentDatabase database = JudgmentDatabaseProvider.getDatabase();
+            for(CourtCaseReference reference : this.getConcernedCourtCases()) {
+                Optional<Judgment> found = database.searchReasons(reference.getCaseNumber());
+                if(found.isPresent()) return found.orElseThrow().getReasons();
+            }
+        }
+        if(index == -1) return "Brak uzasadnienia w wyroku";
         String extractedReasons = textContent.substring(index);
         return Utilities.dropHTMLTags(extractedReasons);
+    }
+
+    public JudgmentType getJudgmentType() {
+        return judgmentType;
     }
 
     public List<CourtCaseReference> getConcernedCourtCases() {
