@@ -20,10 +20,8 @@ public class JudgmentDatabase {
     public void add(Judgment judgment) {
         List<CourtCaseReference> numbersOfCases = judgment.getConcernedCourtCases();
         for(CourtCaseReference caseReference : numbersOfCases) {
-            if(judgment.getJudgmentType().equals(JudgmentType.REASONS)) {
+            if(judgment.getJudgmentType().equals(JudgmentType.REASONS))
                 reasons.put(caseReference.getCaseNumber(), judgment);
-                System.out.println(caseReference.getCaseNumber());
-            }
             else
                 judgments.put(caseReference.getCaseNumber(), judgment);
         }
