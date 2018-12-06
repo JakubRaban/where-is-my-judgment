@@ -3,6 +3,7 @@ package pl.jakubraban.whereismyjudgement;
 import pl.jakubraban.whereismyjudgement.data.judge.Judge;
 import pl.jakubraban.whereismyjudgement.data.judgment.CourtType;
 import pl.jakubraban.whereismyjudgement.data.judgment.Judgment;
+import pl.jakubraban.whereismyjudgement.data.judgment.JudgmentType;
 import pl.jakubraban.whereismyjudgement.data.other.Regulation;
 import pl.jakubraban.whereismyjudgement.input.JudgmentDirectoryReader;
 import pl.jakubraban.whereismyjudgement.input.JudgmentJSONParser;
@@ -30,8 +31,10 @@ public class Functions {
         for(String json : allJsons) {
             try {
                 List<Judgment> judgments = parser.parse(json);
-                newJudgmentsCounter += judgments.size();
-                database.add(judgments);
+                for(Judgment judgment : judgments) {
+                    database.add(judgment);
+                    if(!judgment.getJudgmentType().equals(JudgmentType.REASONS)) newJudgmentsCounter++;
+                }
             } catch (ParseException e) {
                 System.out.println("Zły plik orzeczenia - nie dodano");
             }
@@ -43,7 +46,7 @@ public class Functions {
         List<String> result = new LinkedList<>();
         List<String> erroneousSignatures = new LinkedList<>();
         signatures.forEach(signature -> {
-            Optional<Judgment> searchResult = database.search(signature);
+            Optional<Judgment> searchResult = database.search(signature).or(() -> database.searchReasons(signature));
             if (searchResult.isPresent()) {
                 result.add(searchResult.orElseThrow().getMetric());
             } else {
@@ -54,7 +57,7 @@ public class Functions {
     }
 
     public FunctionResult getReasons(String signature) {
-        Optional<Judgment> searchResult = database.search(signature);
+        Optional<Judgment> searchResult = database.search(signature).or(() -> database.searchReasons(signature));
         return searchResult.isPresent() ?
                 new FunctionResult(searchResult.orElseThrow().getReasons()) :
                 new FunctionResult(null, Collections.singletonList(signature), "Judgment");
