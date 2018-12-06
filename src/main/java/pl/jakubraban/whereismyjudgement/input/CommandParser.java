@@ -33,9 +33,7 @@ public class CommandParser {
         int numberOfArguments = commandParts.length - 1;
         String command = commandParts[0];
         String[] arguments = new String[numberOfArguments];
-        for(int i = 0; i < numberOfArguments; i++) {
-            arguments[i] = commandParts[i + 1];
-        }
+        System.arraycopy(commandParts, 1, arguments, 0, numberOfArguments);
         IllegalArgumentException ex =
                 new IllegalArgumentException("Too few arguments for command " + commandParts[0]);
         switch(command.toLowerCase()) {
