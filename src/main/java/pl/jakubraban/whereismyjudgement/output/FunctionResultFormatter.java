@@ -8,7 +8,6 @@ import java.util.*;
 public class FunctionResultFormatter {
 
     private String format(Object o) {
-        // if(o instanceof LinkedHashMap) return getFormattedMap((LinkedHashMap) o);
         if(o instanceof HashMap) return getFormattedMap((HashMap) o);
         else if(o instanceof List) {
             StringBuilder sb = new StringBuilder();
