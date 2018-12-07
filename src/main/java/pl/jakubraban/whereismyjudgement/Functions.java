@@ -31,10 +31,7 @@ public class Functions {
         for(String json : allJsons) {
             try {
                 List<Judgment> judgments = parser.parse(json);
-                for(Judgment judgment : judgments) {
-                    database.add(judgment);
-                    if(!judgment.isReasons()) newJudgmentsCounter++;
-                }
+                database.add(judgments);
             } catch (ParseException e) {
                 System.out.println("Zły plik orzeczenia - nie dodano");
             }

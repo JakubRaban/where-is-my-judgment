@@ -3,10 +3,7 @@ package pl.jakubraban.whereismyjudgement.storage;
 import pl.jakubraban.whereismyjudgement.data.judgment.CourtCaseReference;
 import pl.jakubraban.whereismyjudgement.data.judgment.Judgment;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class JudgmentDatabase {
@@ -19,7 +16,7 @@ public class JudgmentDatabase {
         reasons = new HashMap<>();
     }
 
-    public void add(Judgment judgment) {
+    private void add(Judgment judgment) {
         List<CourtCaseReference> numbersOfCases = judgment.getConcernedCourtCases();
         for(CourtCaseReference caseReference : numbersOfCases) {
             if(judgment.isReasons())
@@ -32,6 +29,19 @@ public class JudgmentDatabase {
     public void add(List<Judgment> judgments) {
         for(Judgment judgment : judgments) {
             add(judgment);
+        }
+        mergeReasons();
+    }
+
+    private void mergeReasons() {
+        Set<String> reasonsSignatures = new HashSet<>(reasons.keySet());
+        for(String signature : reasonsSignatures) {
+            Optional<Judgment> properJudgment = search(signature);
+            if(properJudgment.isPresent()) {
+                properJudgment.orElseThrow().mergeWithReasons(searchReasons(signature).orElseThrow());
+                reasons.remove(signature);
+                judgments.put(signature, properJudgment.orElseThrow());
+            }
         }
     }
 

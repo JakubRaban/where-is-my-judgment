@@ -110,4 +110,8 @@ public class Judgment {
         return referencedRegulations;
     }
 
+    public void mergeWithReasons(Judgment reasons) {
+        if(!reasons.isReasons()) throw new IllegalArgumentException();
+        this.textContent = this.textContent.concat("\n" + reasons.textContent);
+    }
 }
