@@ -45,7 +45,7 @@ public class Judgment {
     public String getMetric() {
         StringBuilder sb = new StringBuilder();
         if(this.getJudgmentType().equals(JudgmentType.REASONS))
-            sb.append("(Dla tego numeru sprawy załadowane pliki zawierają tylko uzasadnienie wyroku - dane niepełne)")
+            sb.append("(Dla tego numeru sprawy załadowane pliki zawierają tylko uzasadnienie wyroku - dane mogą być niepełne)")
             .append("\n");
         sb.append("Sygnatura: ");
         for(CourtCaseReference aCase : concernedCourtCases) {
@@ -57,7 +57,7 @@ public class Judgment {
         sb.append("\n");
         sb.append("Typ sądu: ");
         sb.append(courtType);
-        if (!this.getJudgmentType().equals(JudgmentType.REASONS)) {
+        if (this.getJudges().size() > 0) {
             sb.append("\n");
             sb.append("Lista sędziów: ").append("\n");
             for(Judge judge : judges) {
