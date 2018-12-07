@@ -70,7 +70,7 @@ public class Judgment {
     public String getReasons() {
         int index = textContent.toLowerCase().indexOf("uzasadnienie");
         if(index == -1) index = textContent.toLowerCase().indexOf("u z a s a d n i e n i e");
-        if(index == -1) {
+        if(index == -1 && !this.getJudgmentType().equals(JudgmentType.REASONS)) {
             JudgmentDatabase database = JudgmentDatabaseProvider.getDatabase();
             for(CourtCaseReference reference : this.getConcernedCourtCases()) {
                 Optional<Judgment> found = database.searchReasons(reference.getCaseNumber());
