@@ -33,7 +33,7 @@ public class Functions {
                 List<Judgment> judgments = parser.parse(json);
                 for(Judgment judgment : judgments) {
                     database.add(judgment);
-                    if(!judgment.getJudgmentType().equals(JudgmentType.REASONS)) newJudgmentsCounter++;
+                    if(!judgment.isReasons()) newJudgmentsCounter++;
                 }
             } catch (ParseException e) {
                 System.out.println("Zły plik orzeczenia - nie dodano");

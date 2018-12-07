@@ -2,9 +2,11 @@ package pl.jakubraban.whereismyjudgement.storage;
 
 import pl.jakubraban.whereismyjudgement.data.judgment.CourtCaseReference;
 import pl.jakubraban.whereismyjudgement.data.judgment.Judgment;
-import pl.jakubraban.whereismyjudgement.data.judgment.JudgmentType;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 public class JudgmentDatabase {
@@ -20,7 +22,7 @@ public class JudgmentDatabase {
     public void add(Judgment judgment) {
         List<CourtCaseReference> numbersOfCases = judgment.getConcernedCourtCases();
         for(CourtCaseReference caseReference : numbersOfCases) {
-            if(judgment.getJudgmentType().equals(JudgmentType.REASONS))
+            if(judgment.isReasons())
                 reasons.put(caseReference.getCaseNumber(), judgment);
             else
                 judgments.put(caseReference.getCaseNumber(), judgment);
