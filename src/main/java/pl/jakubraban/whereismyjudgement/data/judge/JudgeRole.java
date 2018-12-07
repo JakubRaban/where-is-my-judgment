@@ -3,7 +3,7 @@ package pl.jakubraban.whereismyjudgement.data.judge;
 public enum JudgeRole {
 
     PRESIDING_JUDGE, REPORTING_JUDGE,
-    REASONS_FOR_JUDGEMENT_AUTHOR,
+    REASONS_FOR_JUDGMENT_AUTHOR,
     NONE;
 
     public String toString() {
@@ -12,7 +12,7 @@ public enum JudgeRole {
                 return "Przewodniczący składu";
             case REPORTING_JUDGE:
                 return "Sędzia sprawozdawca";
-            case REASONS_FOR_JUDGEMENT_AUTHOR:
+            case REASONS_FOR_JUDGMENT_AUTHOR:
                 return "Autor uzasadnienia";
             default:
                 return "Brak";
