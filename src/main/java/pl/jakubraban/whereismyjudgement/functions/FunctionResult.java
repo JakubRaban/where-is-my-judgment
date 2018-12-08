@@ -8,20 +8,27 @@ public class FunctionResult {
     public static final FunctionResult NONE = new FunctionResult();
     private Object result;
     private List<String> erroneousInput;
-    private String affectedClass;
+    private String errorAffectedClassName;
+    private String message;
 
     private FunctionResult() { }
 
-    FunctionResult(Object result) {
+    public FunctionResult(Object result) {
         this.result = result;
         this.erroneousInput = Collections.emptyList();
-        this.affectedClass = "";
+        this.errorAffectedClassName = "";
+        this.message = "";
     }
 
-    FunctionResult(Object result, List<String> erroneousInput, String affectedClass) {
-        this.result = result;
+    public FunctionResult(Object result, String message) {
+        this(result);
+        this.message = message;
+    }
+
+    public FunctionResult(Object result, List<String> erroneousInput, String errorAffectedClassName, String message) {
+        this(result, message);
         this.erroneousInput = erroneousInput;
-        this.affectedClass = affectedClass;
+        this.errorAffectedClassName = errorAffectedClassName;
     }
 
     public Object getResult() {
@@ -32,8 +39,11 @@ public class FunctionResult {
         return erroneousInput;
     }
 
-    public String getAffectedClass() {
-        return affectedClass;
+    public String getErrorAffectedClassName() {
+        return errorAffectedClassName;
     }
 
+    public String getMessage() {
+        return message;
+    }
 }
