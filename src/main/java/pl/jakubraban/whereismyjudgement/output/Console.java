@@ -1,6 +1,6 @@
 package pl.jakubraban.whereismyjudgement.output;
 
-import pl.jakubraban.whereismyjudgement.FunctionResult;
+import pl.jakubraban.whereismyjudgement.functions.FunctionResult;
 import pl.jakubraban.whereismyjudgement.Functions;
 import pl.jakubraban.whereismyjudgement.input.CommandParser;
 import pl.jakubraban.whereismyjudgement.storage.JudgmentDatabase;

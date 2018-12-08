@@ -1,4 +1,4 @@
-package pl.jakubraban.whereismyjudgement;
+package pl.jakubraban.whereismyjudgement.functions;
 
 import java.util.Collections;
 import java.util.List;
