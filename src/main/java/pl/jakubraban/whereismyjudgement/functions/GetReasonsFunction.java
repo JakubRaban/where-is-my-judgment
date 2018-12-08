@@ -9,6 +9,7 @@ public class GetReasonsFunction extends AbstractFunction {
 
     @Override
     FunctionResult invoke(String... args) {
+        if(args.length < 1) throw argumentException;
         return getReasons(args[0]);
     }
 

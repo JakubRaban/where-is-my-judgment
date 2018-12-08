@@ -12,6 +12,7 @@ public class NumberOfJudgmentsByMonthFunction extends AbstractFunction {
     FunctionResult invoke(String... args) {
         return numberOfJudgmentsByMonth();
     }
+
     private FunctionResult numberOfJudgmentsByMonth() {
         Map<Month, Integer> judgmentsByMonth = new LinkedHashMap<>();
         for(Month month : Month.values()) judgmentsByMonth.put(month, 0);

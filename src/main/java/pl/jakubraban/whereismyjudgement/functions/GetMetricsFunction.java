@@ -11,7 +11,8 @@ import java.util.Optional;
 public class GetMetricsFunction extends AbstractFunction {
 
     @Override
-    FunctionResult invoke(String... args) throws IOException {
+    FunctionResult invoke(String... args) {
+        if(args.length == 0) throw argumentException;
         return getMetrics(Arrays.asList(args));
     }
 

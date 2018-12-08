@@ -2,7 +2,6 @@ package pl.jakubraban.whereismyjudgement.functions;
 
 import pl.jakubraban.whereismyjudgement.data.judge.Judge;
 
-import java.io.IOException;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -12,7 +11,7 @@ import static java.util.Comparator.reverseOrder;
 
 public class GetTopJudgesFunction extends AbstractFunction {
     @Override
-    FunctionResult invoke(String... args) throws IOException {
+    FunctionResult invoke(String... args) {
         if(args.length == 0) return getTopNJudges(10);
         else return getTopNJudges(Integer.parseInt(args[0]));
     }

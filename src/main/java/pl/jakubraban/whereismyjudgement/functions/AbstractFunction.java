@@ -12,6 +12,7 @@ import java.util.stream.Stream;
 public abstract class AbstractFunction {
 
     protected JudgmentDatabase database = JudgmentDatabaseProvider.getDatabase();
+    protected IllegalArgumentException argumentException = new IllegalArgumentException("Bad number of arguments");
 
     abstract FunctionResult invoke(String ... args) throws IOException;
 

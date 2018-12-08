@@ -12,6 +12,7 @@ public class GetNewJudgmentsFunction extends AbstractFunction {
 
     @Override
     FunctionResult invoke(String... args) throws IOException {
+        if(args.length < 1) throw argumentException;
         return getNewJudgments(args[0]);
     }
 

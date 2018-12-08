@@ -3,7 +3,6 @@ package pl.jakubraban.whereismyjudgement.functions;
 import pl.jakubraban.whereismyjudgement.data.judgment.Judgment;
 import pl.jakubraban.whereismyjudgement.data.other.Regulation;
 
-import java.io.IOException;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -14,7 +13,8 @@ import static java.util.Comparator.reverseOrder;
 
 public class GetTopReferencedRegulationsFunction extends AbstractFunction {
     @Override
-    FunctionResult invoke(String... args) throws IOException {
+    FunctionResult invoke(String... args) {
+        if(args.length < 1) throw argumentException;
         return getTopNReferencedRegulations(Integer.parseInt(args[0]));
     }
 

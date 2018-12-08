@@ -4,7 +4,8 @@ public class NumberOfJudgmentsOfSpecifiedJudgeFunction extends AbstractFunction 
 
     @Override
     FunctionResult invoke(String... args) {
-        if(args.length > 1) return numberOfJudgmentsOfSpecifiedJudge(args[0], args[1]);
+        if(args.length < 1) throw argumentException;
+        else if(args.length > 1) return numberOfJudgmentsOfSpecifiedJudge(args[0], args[1]);
         else return numberOfJudgmentsOfSpecifiedJudge(args[0]);
     }
 
