@@ -12,7 +12,7 @@ public class GetNewJudgmentsFunction extends AbstractFunction {
 
     @Override
     FunctionResult invoke(String... args) throws IOException {
-        if(args.length < 1) throw argumentException;
+        if(args.length < 1) throw tooFewArguments;
         return getNewJudgments(args[0]);
     }
 
@@ -25,11 +25,12 @@ public class GetNewJudgmentsFunction extends AbstractFunction {
             try {
                 List<Judgment> judgments = parser.parse(json);
                 database.add(judgments);
+                newJudgmentsCounter += judgments.size();
             } catch (ParseException e) {
                 System.out.println("Zły plik orzeczenia - nie dodano");
             }
         }
-        return new FunctionResult(newJudgmentsCounter);
+        return new FunctionResult(null, "Załadowano wyroków: " + newJudgmentsCounter);
     }
 
 }

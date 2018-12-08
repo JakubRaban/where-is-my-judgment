@@ -2,7 +2,6 @@ package pl.jakubraban.whereismyjudgement.functions;
 
 import pl.jakubraban.whereismyjudgement.data.judgment.Judgment;
 
-import java.io.IOException;
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
@@ -12,7 +11,7 @@ public class GetMetricsFunction extends AbstractFunction {
 
     @Override
     FunctionResult invoke(String... args) {
-        if(args.length == 0) throw argumentException;
+        if(args.length == 0) throw tooFewArguments;
         return getMetrics(Arrays.asList(args));
     }
 
@@ -27,6 +26,6 @@ public class GetMetricsFunction extends AbstractFunction {
                 erroneousSignatures.add(signature);
             }
         });
-        return new FunctionResult(result, erroneousSignatures, "Judgment");
+        return new FunctionResult(result, erroneousSignatures, "Judgment", "");
     }
 }

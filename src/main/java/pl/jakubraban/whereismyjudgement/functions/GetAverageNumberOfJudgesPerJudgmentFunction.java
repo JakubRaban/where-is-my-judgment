@@ -4,7 +4,7 @@ import pl.jakubraban.whereismyjudgement.data.judgment.Judgment;
 
 import java.util.List;
 
-public class GetAverageNumberOfJudgmentsPerJudgmentFunction extends AbstractFunction {
+public class GetAverageNumberOfJudgesPerJudgmentFunction extends AbstractFunction {
     @Override
     FunctionResult invoke(String... args) {
         return getAverageNumberOfJudgesPerJudgment();

@@ -14,7 +14,7 @@ import static java.util.Comparator.reverseOrder;
 public class GetTopReferencedRegulationsFunction extends AbstractFunction {
     @Override
     FunctionResult invoke(String... args) {
-        if(args.length < 1) throw argumentException;
+        if(args.length == 0) return getTopNReferencedRegulations(10);
         return getTopNReferencedRegulations(Integer.parseInt(args[0]));
     }
 

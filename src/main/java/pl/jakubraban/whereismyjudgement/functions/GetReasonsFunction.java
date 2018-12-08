@@ -9,7 +9,7 @@ public class GetReasonsFunction extends AbstractFunction {
 
     @Override
     FunctionResult invoke(String... args) {
-        if(args.length < 1) throw argumentException;
+        if(args.length < 1) throw tooFewArguments;
         return getReasons(args[0]);
     }
 
@@ -17,6 +17,6 @@ public class GetReasonsFunction extends AbstractFunction {
         Optional<Judgment> searchResult = database.search(signature).or(() -> database.searchReasons(signature));
         return searchResult.isPresent() ?
                 new FunctionResult(searchResult.orElseThrow().getReasons()) :
-                new FunctionResult(null, Collections.singletonList(signature), "Judgment");
+                new FunctionResult(null, Collections.singletonList(signature), "Judgment", "");
     }
 }
