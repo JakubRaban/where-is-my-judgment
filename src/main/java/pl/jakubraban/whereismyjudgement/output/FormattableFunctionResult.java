@@ -7,12 +7,11 @@ import java.util.*;
 
 public class FormattableFunctionResult extends FunctionResult {
 
-    public FormattableFunctionResult(FunctionResult result) {
+    FormattableFunctionResult(FunctionResult result) {
         super(result.getResult(), result.getErroneousInput(), result.getErrorAffectedClassName(), result.getMessage());
     }
 
-    public String format() {
-        if (this == FunctionResult.NONE) return "";
+    String format() {
         Optional<Object> objectToPrint = Optional.ofNullable(getResult());
         StringBuilder printedResult = new StringBuilder();
         if (objectToPrint.isPresent()) printedResult.append(format(objectToPrint.orElseThrow()));
@@ -34,6 +33,7 @@ public class FormattableFunctionResult extends FunctionResult {
         else if(o instanceof List) {
             StringBuilder sb = new StringBuilder();
             for(Object s : (List) o) {
+                sb.append("\n");
                 sb.append(s.toString());
             }
             return sb.toString();
