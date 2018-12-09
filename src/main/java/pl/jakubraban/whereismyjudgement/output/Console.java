@@ -20,7 +20,7 @@ public class Console {
                     new FormattableFunctionResult(invoker.invoke("setPath", judgmentsPath));
             System.out.println(fileLoadingResult.format());
         } catch(InvalidPathException ipe) {
-            System.out.println("Podana jako parametr ścieżka nie jest katalogiem");
+            System.out.println("BŁĄD: Podana jako parametr ścieżka nie jest katalogiem");
         } catch(IOException ioe) {
             System.out.println("Błąd odczytu pliku");
         } finally {
@@ -40,9 +40,9 @@ public class Console {
             } catch (IOException ioe) {
                 System.out.println("Błąd odczytu z pliku");
             } catch (IllegalArgumentException iae) {
-                System.out.println("Nieprawidłowy argument lub ilość argumentów");
+                System.out.println("BŁĄD: Nieprawidłowy argument lub ilość argumentów");
             } catch(NoSuchElementException nsee) {
-                System.out.println("Złe polecenie");
+                System.out.println("BŁĄD: Złe polecenie");
             } finally {
                 System.out.println();
             }
