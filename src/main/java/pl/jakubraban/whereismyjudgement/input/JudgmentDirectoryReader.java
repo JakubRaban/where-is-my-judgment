@@ -22,7 +22,7 @@ public class JudgmentDirectoryReader {
 
     public List<Path> getAllJSONs() throws IOException {
         return Files.walk(pathToJudgments)
-                .filter(path -> path.toString().endsWith(".json"))
+                .filter(path -> path.toString().toLowerCase().endsWith(".json"))
                 .filter(Files::isRegularFile)
                 .collect(Collectors.toList());
     }
