@@ -17,7 +17,7 @@ public class FunctionInvoker {
     private static final String JUDGMENTS_BY_MONTH         = "judgmentsbymonth";
     private static final String JUDGMENTS_BY_COURT_TYPE    = "judgmentsbycourttype";
     private static final String TOP_REFERENCED_REGULATIONS = "topreferencedregulations";
-    private static final String AVERAGE_JUDGES_NUMBER      = "averagejudgesnumber";
+    private static final String JUDGES_NUMBER_DISTRIBUTION = "judgenumberdistribution";
     private static final String EXIT                       = "exit";
 
     public FunctionInvoker() {
@@ -30,7 +30,7 @@ public class FunctionInvoker {
         functionNames.put(JUDGMENTS_BY_MONTH, new NumberOfJudgmentsByMonthFunction());
         functionNames.put(JUDGMENTS_BY_COURT_TYPE, new NumberOfJudgmentsByCourtTypeFunction());
         functionNames.put(TOP_REFERENCED_REGULATIONS, new GetTopReferencedRegulationsFunction());
-        functionNames.put(AVERAGE_JUDGES_NUMBER, new GetAverageNumberOfJudgesPerJudgmentFunction());
+        functionNames.put(JUDGES_NUMBER_DISTRIBUTION, new GetJudgeNumberDistributionFunction());
         functionNames.put(EXIT, new DontWannaSeeMoreJudgmentsFunction());
     }
 
