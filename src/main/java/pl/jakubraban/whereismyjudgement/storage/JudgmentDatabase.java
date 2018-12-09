@@ -21,7 +21,7 @@ public class JudgmentDatabase {
         for(CourtCaseReference caseReference : numbersOfCases) {
             if(judgment.isReasons())
                 reasons.put(caseReference.getCaseNumber(), judgment);
-            else
+            else if(judgment.getJudges().size() != 0)
                 judgments.put(caseReference.getCaseNumber(), judgment);
         }
     }
