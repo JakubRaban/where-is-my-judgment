@@ -20,7 +20,7 @@ public class Judge {
         if(function != null) sb.append(function).append(" ");
         sb.append(name);
         if(specialRoles.size() > 0) sb.append(" - ");
-        sb.append(Utilities.getListWithCommas(specialRoles));
+        sb.append(Utilities.getDelimitedList(specialRoles, ','));
         return sb.toString();
     }
 
