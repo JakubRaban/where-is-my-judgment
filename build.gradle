@@ -4,7 +4,7 @@ plugins {
 }
 
 apply plugin: 'application'
-mainClassName = 'pl.jakubraban.whereismyjudgment.Main'
+mainClassName = 'pl.jakubraban.whereismyjudgement.Main'
 
 compileJava.options.encoding = 'UTF-8'
 compileTestJava.options.encoding = 'UTF-8'
