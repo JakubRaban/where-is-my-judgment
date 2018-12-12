@@ -45,7 +45,7 @@ public class FormattableFunctionResult extends FunctionResult {
     private void appendErrorMessage(StringBuilder printedResult) {
         printedResult.append("BŁĄD: Żadna instancja ").append(getErrorAffectedClassName())
                 .append(" nie wynika z użycia nazw(y) ")
-                .append(Utilities.getListWithCommas(getErroneousInput()))
+                .append(Utilities.getDelimitedList(getErroneousInput(), ','))
                 .append("\n");
     }
 
