@@ -16,7 +16,7 @@ public class JudgmentDatabase {
         reasons = new HashMap<>();
     }
 
-    private void add(Judgment judgment) {
+    public void add(Judgment judgment) {
         List<CourtCaseReference> numbersOfCases = judgment.getConcernedCourtCases();
         for(CourtCaseReference caseReference : numbersOfCases) {
             if(judgment.isReasons())

@@ -37,18 +37,23 @@ public class JudgmentFromHTMLCreator {
         htmlDocument.select("br").append("\\");
     }
 
-    public Judgment create() throws NoSuchMethodException, IllegalAccessException, InvocationTargetException, InstantiationException, NoSuchFieldException {
-        setSignatures();
-        setTextContent();
-        setFields(getParameters());
-        Judgment created = Judgment.class.getDeclaredConstructor().newInstance();
-        setAccessible(Judgment.class.getDeclaredField("concernedCourtCases")).set(created, signatures);
-        setAccessible(Judgment.class.getDeclaredField("judgmentDate")).set(created, judgmentDate);
-        setAccessible(Judgment.class.getDeclaredField("judges")).set(created, judges);
-        setAccessible(Judgment.class.getDeclaredField("textContent")).set(created, textContent);
-        setAccessible(Judgment.class.getDeclaredField("referencedRegulations")).set(created, referencedRegulations);
-        setAccessible(Judgment.class.getDeclaredField("courtType")).set(created, CourtType.ADMINISTRATIVE);
-        setAccessible(Judgment.class.getDeclaredField("judgmentType")).set(created, JudgmentType.SENTENCE);
+    public Judgment create() {
+        Judgment created;
+        try {
+            setSignatures();
+            setTextContent();
+            setFields(getParameters());
+            created = Judgment.class.getDeclaredConstructor().newInstance();
+            setAccessible(Judgment.class.getDeclaredField("concernedCourtCases")).set(created, signatures);
+            setAccessible(Judgment.class.getDeclaredField("judgmentDate")).set(created, judgmentDate);
+            setAccessible(Judgment.class.getDeclaredField("judges")).set(created, judges);
+            setAccessible(Judgment.class.getDeclaredField("textContent")).set(created, textContent);
+            setAccessible(Judgment.class.getDeclaredField("referencedRegulations")).set(created, referencedRegulations);
+            setAccessible(Judgment.class.getDeclaredField("courtType")).set(created, CourtType.ADMINISTRATIVE);
+            setAccessible(Judgment.class.getDeclaredField("judgmentType")).set(created, JudgmentType.SENTENCE);
+        } catch (InstantiationException | NoSuchFieldException | SecurityException | NoSuchMethodException | InvocationTargetException | IllegalArgumentException | IllegalAccessException e) {
+            return null;
+        }
         return created;
     }
 

@@ -2,9 +2,11 @@ package pl.jakubraban.whereismyjudgement.functions;
 
 import pl.jakubraban.whereismyjudgement.data.judgment.Judgment;
 import pl.jakubraban.whereismyjudgement.input.JudgmentDirectoryReader;
+import pl.jakubraban.whereismyjudgement.input.JudgmentFromHTMLCreator;
 import pl.jakubraban.whereismyjudgement.input.JudgmentJSONParser;
 
 import java.io.IOException;
+import java.nio.file.Path;
 import java.text.ParseException;
 import java.util.List;
 
@@ -29,6 +31,11 @@ public class GetNewJudgmentsFunction extends AbstractFunction {
             } catch (ParseException e) {
                 System.out.println("Zły plik orzeczenia - nie dodano");
             }
+        }
+        List<Path> htmlJudgments = reader.getAllHTML();
+        for(Path pathToJudgment : htmlJudgments) {
+            database.add(new JudgmentFromHTMLCreator(pathToJudgment).create());
+            newJudgmentsCounter++;
         }
         return new FunctionResult(null, "Załadowano wyroków: " + newJudgmentsCounter);
     }
