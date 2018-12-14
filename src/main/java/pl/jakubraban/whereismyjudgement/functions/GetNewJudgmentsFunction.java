@@ -44,8 +44,11 @@ public class GetNewJudgmentsFunction extends AbstractFunction {
         }
         List<Path> htmlJudgments = reader.getAllHTML();
         for(Path pathToJudgment : htmlJudgments) {
-            database.add(new JudgmentFromHTMLCreator(pathToJudgment).create());
-            newJudgmentsCounter++;
+            Judgment judgmentFromHTML = new JudgmentFromHTMLCreator(pathToJudgment).create();
+            if (judgmentFromHTML != null) {
+                database.add(judgmentFromHTML);
+                newJudgmentsCounter++;
+            }
         }
         return new FunctionResult(null, "Załadowano wyroków: " + newJudgmentsCounter);
     }
