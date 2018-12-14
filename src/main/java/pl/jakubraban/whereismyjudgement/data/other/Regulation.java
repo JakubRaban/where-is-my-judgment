@@ -14,6 +14,10 @@ public class Regulation {
     private int journalEntryNumber;
     private String text;
 
+    public Regulation(String journalTitle) {
+        this.journalTitle = journalTitle;
+    }
+
     public String getJournalTitle() {
         return journalTitle;
     }

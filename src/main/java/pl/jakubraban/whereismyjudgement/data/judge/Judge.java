@@ -2,6 +2,7 @@ package pl.jakubraban.whereismyjudgement.data.judge;
 
 import pl.jakubraban.whereismyjudgement.Utilities;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
@@ -10,6 +11,11 @@ public class Judge {
     private String name;
     private String function;
     private List<JudgeRole> specialRoles;
+
+    public Judge(String name, JudgeRole ... specialRoles) {
+        this.name = name;
+        this.specialRoles = Arrays.asList(specialRoles);
+    }
 
     public String getName() {
         return name;
