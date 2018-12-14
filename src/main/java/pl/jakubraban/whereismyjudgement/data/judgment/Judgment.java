@@ -77,7 +77,7 @@ public class Judgment {
                 if(found.isPresent()) return found.orElseThrow().getReasons();
             }
         }
-        if(index == -1) return "Brak uzasadnienia w wyroku";
+        if(index == -1) return "(Brak uzasadnienia w wyroku) \n" + textContent;
         String extractedReasons = textContent.substring(index);
         return Utilities.dropHTMLTags(extractedReasons);
     }
