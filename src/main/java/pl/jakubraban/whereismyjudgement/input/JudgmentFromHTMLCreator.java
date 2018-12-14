@@ -7,12 +7,15 @@ import org.jsoup.select.Elements;
 import pl.jakubraban.whereismyjudgement.data.judge.Judge;
 import pl.jakubraban.whereismyjudgement.data.judge.JudgeRole;
 import pl.jakubraban.whereismyjudgement.data.judgment.CourtCaseReference;
+import pl.jakubraban.whereismyjudgement.data.judgment.CourtType;
 import pl.jakubraban.whereismyjudgement.data.judgment.Judgment;
+import pl.jakubraban.whereismyjudgement.data.judgment.JudgmentType;
 import pl.jakubraban.whereismyjudgement.data.other.Regulation;
 
 import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
 import java.nio.file.Path;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -26,7 +29,7 @@ public class JudgmentFromHTMLCreator {
     private Calendar judgmentDate;
     private List<Judge> judges;
     private String textContent;
-    private List<Regulation> referencedCourtCases;
+    private List<Regulation> referencedRegulations;
 
     public JudgmentFromHTMLCreator(Path pathToHtml) throws IOException {
         File html = pathToHtml.toFile();
@@ -34,17 +37,28 @@ public class JudgmentFromHTMLCreator {
         htmlDocument.select("br").append("\\");
     }
 
-    public Judgment create() {
-        return null;
+    public Judgment create() throws NoSuchMethodException, IllegalAccessException, InvocationTargetException, InstantiationException, NoSuchFieldException {
+        setSignatures();
+        setTextContent();
+        setFields(getParameters());
+        Judgment created = Judgment.class.getDeclaredConstructor().newInstance();
+        setAccessible(Judgment.class.getDeclaredField("concernedCourtCases")).set(created, signatures);
+        setAccessible(Judgment.class.getDeclaredField("judgmentDate")).set(created, judgmentDate);
+        setAccessible(Judgment.class.getDeclaredField("judges")).set(created, judges);
+        setAccessible(Judgment.class.getDeclaredField("textContent")).set(created, textContent);
+        setAccessible(Judgment.class.getDeclaredField("referencedRegulations")).set(created, referencedRegulations);
+        setAccessible(Judgment.class.getDeclaredField("courtType")).set(created, CourtType.ADMINISTRATIVE);
+        setAccessible(Judgment.class.getDeclaredField("judgmentType")).set(created, JudgmentType.SENTENCE);
+        return created;
     }
 
-    public void setSignatures() {
+    private void setSignatures() {
         String signatureHeader = htmlDocument.getElementsByClass("war_header").first().text();
         String properSignature = signatureHeader.substring(0, signatureHeader.indexOf("-") - 1);
         signatures = Collections.singletonList(new CourtCaseReference(properSignature));
     }
 
-    public Map<String, String> getParameters() {
+    private Map<String, String> getParameters() {
         Map<String, String> judgmentContents = new HashMap<>();
         Element table = htmlDocument.select("table").get(3);
         Elements rows = table.select("tr");
@@ -64,11 +78,9 @@ public class JudgmentFromHTMLCreator {
         return judgmentContents;
     }
 
-    public void getAndSetTextContent(Path pathToHtml) throws IOException {
+    private void setTextContent() {
         StringBuilder result = new StringBuilder();
-        File html = pathToHtml.toFile();
-        Document document = Jsoup.parse(html, "UTF-8");
-        Element table = document.select("table").get(3);
+        Element table = htmlDocument.select("table").get(3);
         Elements sentence = table.getElementsByClass("info-list-label-uzasadnienie");
         for(Element element : sentence) {
             result.append(element.text()).append("\n");
@@ -76,7 +88,7 @@ public class JudgmentFromHTMLCreator {
         textContent = result.toString().replaceAll("\\\\", "\n");
     }
 
-    public void setFields(Map<String, String> parameters) {
+    private void setFields(Map<String, String> parameters) {
         for(String parameterName : parameters.keySet()) {
             switch(parameterName) {
                 case "Data orzeczenia":
@@ -86,13 +98,13 @@ public class JudgmentFromHTMLCreator {
                     judges = parseJudges(parameters.get("Sędziowie"));
                     break;
                 case "Powołane przepisy":
-                    referencedCourtCases = parseReferencedRegulations(parameters.get("Powołane przepisy"));
+                    referencedRegulations = parseReferencedRegulations(parameters.get("Powołane przepisy"));
                     break;
             }
         }
     }
 
-    public List<Regulation> parseReferencedRegulations(String courtCases) {
+    private List<Regulation> parseReferencedRegulations(String courtCases) {
         String[] courtCasesStringArray = courtCases.split("\\\\");
         List<Regulation> toReturn = new LinkedList<>();
         for(String aCase : courtCasesStringArray) {
@@ -103,14 +115,14 @@ public class JudgmentFromHTMLCreator {
                     sb.insert(aCase.indexOf("r.") + 2, " - ");
                     aCase = sb.toString();
                 }
-                aCase = aCase.substring(0, aCase.length() - 1);
+                if(aCase.endsWith(".")) aCase = aCase.substring(0, aCase.length() - 1);
                 toReturn.add(new Regulation(aCase));
             }
         }
         return toReturn;
     }
 
-    public List<Judge> parseJudges(String judges) {
+    private List<Judge> parseJudges(String judges) {
         List<Judge> toReturn = new LinkedList<>();
         String[] judgesArray = judges.split("\\\\");
         for(String oneJudge : judgesArray) {
