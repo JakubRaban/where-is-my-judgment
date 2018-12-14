@@ -27,9 +27,9 @@ public class JudgmentFromHTMLCreator {
 
     private List<CourtCaseReference> signatures;
     private Calendar judgmentDate;
-    private List<Judge> judges;
+    private List<Judge> judges = new LinkedList<>();
     private String textContent;
-    private List<Regulation> referencedRegulations;
+    private List<Regulation> referencedRegulations = new LinkedList<>();
 
     public JudgmentFromHTMLCreator(Path pathToHtml) throws IOException {
         File html = pathToHtml.toFile();
@@ -115,7 +115,7 @@ public class JudgmentFromHTMLCreator {
         for(String aCase : courtCasesStringArray) {
             aCase = aCase.trim();
             if(!aCase.contains("Dz.U.") && !aCase.contains("Dz. U.")) {
-                if (!aCase.contains("w sprawie")) {
+                if (!aCase.contains("w sprawie") && !aCase.contains("r. o")) {
                     StringBuilder sb = new StringBuilder(aCase);
                     sb.insert(aCase.indexOf("r.") + 2, " - ");
                     aCase = sb.toString();
