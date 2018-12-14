@@ -22,6 +22,10 @@ public abstract class AbstractFunction {
     abstract FunctionResult invoke(String ... args) throws IOException;
     abstract String getHelpMessage();
 
+    String getName() {
+        return name;
+    }
+
     Stream<Judge> getJudgeStream() {
         return getJudgmentsStream()
                 .map(Judgment::getJudges)
