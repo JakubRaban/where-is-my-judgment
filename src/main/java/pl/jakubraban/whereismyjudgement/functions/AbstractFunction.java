@@ -13,8 +13,14 @@ public abstract class AbstractFunction {
 
     JudgmentDatabase database = JudgmentDatabaseProvider.getDatabase();
     IllegalArgumentException tooFewArguments = new IllegalArgumentException("Bad number of arguments");
+    String name;
+
+    AbstractFunction(String name) {
+        this.name = name;
+    }
 
     abstract FunctionResult invoke(String ... args) throws IOException;
+    abstract String getHelpMessage();
 
     Stream<Judge> getJudgeStream() {
         return getJudgmentsStream()

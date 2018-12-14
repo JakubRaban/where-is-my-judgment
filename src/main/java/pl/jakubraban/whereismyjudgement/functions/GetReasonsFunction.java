@@ -7,10 +7,19 @@ import java.util.Optional;
 
 public class GetReasonsFunction extends AbstractFunction {
 
+    GetReasonsFunction(String name) {
+        super(name);
+    }
+
     @Override
     FunctionResult invoke(String... args) {
         if(args.length < 1) throw tooFewArguments;
         return getReasons(args[0]);
+    }
+
+    @Override
+    String getHelpMessage() {
+        return name + " \"sygnatura\" -- pokaż uzasadnienie wyroku o danej sygnaturze";
     }
 
     private FunctionResult getReasons(String signature) {

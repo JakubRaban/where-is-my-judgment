@@ -9,10 +9,19 @@ import java.util.Optional;
 
 public class GetMetricsFunction extends AbstractFunction {
 
+    GetMetricsFunction(String name) {
+        super(name);
+    }
+
     @Override
     FunctionResult invoke(String... args) {
         if(args.length == 0) throw tooFewArguments;
         return getMetrics(Arrays.asList(args));
+    }
+
+    @Override
+    String getHelpMessage() {
+        return name + " \"sygnatura1\" \"sygnatura2\" ... -- metryka wybranych orzeczeń";
     }
 
     private FunctionResult getMetrics(List<String> signatures) {

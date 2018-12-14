@@ -12,13 +12,23 @@ import java.util.List;
 
 public class GetNewJudgmentsFunction extends AbstractFunction {
 
+    GetNewJudgmentsFunction(String name) {
+        super(name);
+    }
+
     @Override
     FunctionResult invoke(String... args) throws IOException {
         if(args.length < 1) throw tooFewArguments;
         return getNewJudgments(args[0]);
     }
 
+    @Override
+    String getHelpMessage() {
+        return name + " ścieżka -- ustaw folder gdzie są pliki z wyrokami";
+    }
+
     private FunctionResult getNewJudgments(String path) throws IOException {
+        if(JudgmentDirectoryReader.isPathSet()) return new FunctionResult(null, "Ścieżka już ustawiona");
         JudgmentDirectoryReader reader = new JudgmentDirectoryReader(path);
         JudgmentJSONParser parser = new JudgmentJSONParser();
         List<String> allJsons = reader.getFilesContents();

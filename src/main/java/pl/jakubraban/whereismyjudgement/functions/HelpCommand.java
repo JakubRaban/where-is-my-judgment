@@ -8,6 +8,10 @@ import java.util.stream.Collectors;
 
 public class HelpCommand extends AbstractFunction {
 
+    HelpCommand(String name) {
+        super(name);
+    }
+
     @Override
     FunctionResult invoke(String... args) {
         Map<String, AbstractFunction> functions = new FunctionInvoker().getFunctionNames();
@@ -15,6 +19,11 @@ public class HelpCommand extends AbstractFunction {
                 .map(AbstractFunction::getHelpMessage)
                 .collect(Collectors.toList());
         return new FunctionResult(null, Utilities.getDelimitedList(help, '\n'));
+    }
+
+    @Override
+    String getHelpMessage() {
+        return name + " -- pomoc";
     }
 
 }

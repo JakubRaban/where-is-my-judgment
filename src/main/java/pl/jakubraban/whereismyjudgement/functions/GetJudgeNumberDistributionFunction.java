@@ -9,9 +9,18 @@ import java.util.List;
 import java.util.Map;
 
 public class GetJudgeNumberDistributionFunction extends AbstractFunction {
+    GetJudgeNumberDistributionFunction(String name) {
+        super(name);
+    }
+
     @Override
     FunctionResult invoke(String... args) {
         return getAverageNumberOfJudgesPerJudgment();
+    }
+
+    @Override
+    String getHelpMessage() {
+        return name + " -- dane na temat tego ile wyroków zapadło w danej liczebności składu sędziowskiegp";
     }
 
     private FunctionResult getAverageNumberOfJudgesPerJudgment() {

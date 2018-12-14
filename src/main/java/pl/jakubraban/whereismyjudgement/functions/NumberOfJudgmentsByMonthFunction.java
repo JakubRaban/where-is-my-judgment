@@ -8,9 +8,18 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 public class NumberOfJudgmentsByMonthFunction extends AbstractFunction {
+    NumberOfJudgmentsByMonthFunction(String name) {
+        super(name);
+    }
+
     @Override
     FunctionResult invoke(String... args) {
         return numberOfJudgmentsByMonth();
+    }
+
+    @Override
+    String getHelpMessage() {
+        return name + " -- rozkład liczby orzeczeń według miesięcy";
     }
 
     private FunctionResult numberOfJudgmentsByMonth() {

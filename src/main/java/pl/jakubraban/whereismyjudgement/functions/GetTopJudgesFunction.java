@@ -10,10 +10,19 @@ import static java.util.Comparator.comparing;
 import static java.util.Comparator.reverseOrder;
 
 public class GetTopJudgesFunction extends AbstractFunction {
+    GetTopJudgesFunction(String name) {
+        super(name);
+    }
+
     @Override
     FunctionResult invoke(String... args) {
         if(args.length == 0) return getTopNJudges(10);
         else return getTopNJudges(Integer.parseInt(args[0]));
+    }
+
+    @Override
+    String getHelpMessage() {
+        return name + " [liczba] -- wybrana liczba sędziów o największej liczbie orzeczeń (lub 10 jeśli bez parametru)";
     }
 
     private FunctionResult getTopNJudges(final int N) {

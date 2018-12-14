@@ -12,10 +12,19 @@ import static java.util.Comparator.comparing;
 import static java.util.Comparator.reverseOrder;
 
 public class GetTopReferencedRegulationsFunction extends AbstractFunction {
+    GetTopReferencedRegulationsFunction(String name) {
+        super(name);
+    }
+
     @Override
     FunctionResult invoke(String... args) {
         if(args.length == 0) return getTopNReferencedRegulations(10);
         return getTopNReferencedRegulations(Integer.parseInt(args[0]));
+    }
+
+    @Override
+    String getHelpMessage() {
+        return name + " [liczba] -- wybrana liczba najczęściej przywoływanych aktów prawnych (lub 10 jeśli nie podana)";
     }
 
     private FunctionResult getTopNReferencedRegulations(final int N) {

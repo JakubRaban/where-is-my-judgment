@@ -7,9 +7,18 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class NumberOfJudgmentsByCourtTypeFunction extends AbstractFunction {
+    NumberOfJudgmentsByCourtTypeFunction(String name) {
+        super(name);
+    }
+
     @Override
     FunctionResult invoke(String... args) {
         return numberOfJudgmentsByCourtType();
+    }
+
+    @Override
+    String getHelpMessage() {
+        return name + " -- liczba orzeczeń według rodzaju sądu";
     }
 
     private FunctionResult numberOfJudgmentsByCourtType() {
