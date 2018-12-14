@@ -27,6 +27,13 @@ public class JudgmentDirectoryReader {
                 .collect(Collectors.toList());
     }
 
+    public List<Path> getAllHTML() throws IOException {
+        return Files.walk(pathToJudgments)
+                .filter(path -> path.toString().endsWith(".html"))
+                .filter(Files::isRegularFile)
+                .collect(Collectors.toList());
+    }
+
     public ArrayList<String> getFilesContents() throws IOException {
         return extractFromFiles(getAllJSONs());
     }
