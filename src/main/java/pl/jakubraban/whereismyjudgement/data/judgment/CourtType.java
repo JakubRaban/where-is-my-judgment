@@ -2,7 +2,8 @@ package pl.jakubraban.whereismyjudgement.data.judgment;
 
 public enum CourtType {
 
-    COMMON, SUPREME, ADMINISTRATIVE,
+    COMMON, SUPREME, SUPREME_ADMINISTRATIVE,
+    REGIONAL_ADMINISTRATIVE,
     CONSTITUTIONAL_TRIBUNAL,
     NATIONAL_APPEAL_CHAMBER,
     NONE;
@@ -13,8 +14,10 @@ public enum CourtType {
                 return "Sąd powszechny";
             case SUPREME:
                 return "Sąd Najwyższy";
-            case ADMINISTRATIVE:
-                return "Sąd Administracyjny";
+            case SUPREME_ADMINISTRATIVE:
+                return "Naczelny Sąd Administracyjny";
+            case REGIONAL_ADMINISTRATIVE:
+                return "Wojewódzki Sąd Administracyjny";
             case CONSTITUTIONAL_TRIBUNAL:
                 return "Trybunał Konstytucyjny";
             case NATIONAL_APPEAL_CHAMBER:

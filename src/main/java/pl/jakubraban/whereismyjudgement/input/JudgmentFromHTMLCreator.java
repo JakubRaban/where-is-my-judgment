@@ -30,6 +30,7 @@ public class JudgmentFromHTMLCreator {
     private List<Judge> judges = new LinkedList<>();
     private String textContent;
     private List<Regulation> referencedRegulations = new LinkedList<>();
+    private CourtType courtType;
 
     public JudgmentFromHTMLCreator(Path pathToHtml) throws IOException {
         File html = pathToHtml.toFile();
@@ -49,7 +50,7 @@ public class JudgmentFromHTMLCreator {
             setAccessible(Judgment.class.getDeclaredField("judges")).set(created, judges);
             setAccessible(Judgment.class.getDeclaredField("textContent")).set(created, textContent);
             setAccessible(Judgment.class.getDeclaredField("referencedRegulations")).set(created, referencedRegulations);
-            setAccessible(Judgment.class.getDeclaredField("courtType")).set(created, CourtType.ADMINISTRATIVE);
+            setAccessible(Judgment.class.getDeclaredField("courtType")).set(created, courtType);
             setAccessible(Judgment.class.getDeclaredField("judgmentType")).set(created, JudgmentType.SENTENCE);
         } catch (InstantiationException | NoSuchFieldException | SecurityException | NoSuchMethodException | InvocationTargetException | IllegalArgumentException | IllegalAccessException e) {
             return null;
@@ -105,8 +106,15 @@ public class JudgmentFromHTMLCreator {
                 case "Powołane przepisy":
                     referencedRegulations = parseReferencedRegulations(parameters.get("Powołane przepisy"));
                     break;
+                case "Sąd":
+                    courtType = parseCourtType(parameters.get("Sąd"));
             }
         }
+    }
+
+    private CourtType parseCourtType(String court) {
+        if(court.contains("Naczelny")) return CourtType.SUPREME_ADMINISTRATIVE;
+        else return CourtType.REGIONAL_ADMINISTRATIVE;
     }
 
     private List<Regulation> parseReferencedRegulations(String courtCases) {
