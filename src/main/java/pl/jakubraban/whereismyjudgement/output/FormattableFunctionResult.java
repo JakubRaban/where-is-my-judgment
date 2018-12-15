@@ -23,7 +23,7 @@ public class FormattableFunctionResult extends FunctionResult {
     private String getFormattedMap(HashMap map) {
         StringBuilder sb = new StringBuilder();
         for(Map.Entry entry : ((HashMap<Object, Object>) map).entrySet()) {
-            sb.append(entry.getKey()).append(" -- ").append(entry.getValue()).append("\n");
+            sb.append(entry.getKey()).append(" -- ").append(entry.getValue()).append(Utilities.newLine);
         }
         return sb.toString();
     }
@@ -33,7 +33,7 @@ public class FormattableFunctionResult extends FunctionResult {
         else if(o instanceof List) {
             StringBuilder sb = new StringBuilder();
             for(Object s : (List) o) {
-                sb.append("\n");
+                sb.append(Utilities.newLine);
                 sb.append(s.toString());
             }
             return sb.toString();
@@ -45,8 +45,8 @@ public class FormattableFunctionResult extends FunctionResult {
     private void appendErrorMessage(StringBuilder printedResult) {
         printedResult.append("BŁĄD: Żadna instancja ").append(getErrorAffectedClassName())
                 .append(" nie wynika z użycia nazw(y) ")
-                .append(Utilities.getDelimitedList(getErroneousInput(), ','))
-                .append("\n");
+                .append(Utilities.getDelimitedList(getErroneousInput(), ", "))
+                .append(Utilities.newLine);
     }
 
 }

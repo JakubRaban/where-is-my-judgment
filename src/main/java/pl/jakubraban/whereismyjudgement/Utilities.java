@@ -9,14 +9,16 @@ import java.util.List;
 
 public class Utilities {
 
-    public static String getDelimitedList(List list, char delimiter) {
+    public static String newLine = System.getProperty("line.separator");
+
+    public static String getDelimitedList(List list, String delimiter) {
         StringBuilder sb = new StringBuilder();
         Iterator iterator = list.iterator();
         while(iterator.hasNext()) {
             Object current = iterator.next();
             if(current != null) {
                 sb.append(current.toString());
-                if(iterator.hasNext()) sb.append(delimiter).append(" ");
+                if(iterator.hasNext()) sb.append(delimiter);
             }
         }
         return sb.toString();
@@ -26,8 +28,8 @@ public class Utilities {
         Document document = Jsoup.parse(html);
         document.outputSettings(new Document.OutputSettings().prettyPrint(false));
         document.select("br").append("\\n");
-        String s = document.html().replaceAll("\\\\n", "\n");
+        String s = document.html().replaceAll("\\\\n", Utilities.newLine);
         String tagClean = Jsoup.clean(s, "", Whitelist.none(), new Document.OutputSettings().prettyPrint(false));
-        return tagClean.replaceAll("\n\n", "\n");
+        return tagClean.replaceAll(Utilities.newLine + Utilities.newLine, Utilities.newLine);
     }
 }

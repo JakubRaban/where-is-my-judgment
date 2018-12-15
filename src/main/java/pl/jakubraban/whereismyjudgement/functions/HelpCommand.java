@@ -30,7 +30,7 @@ public class HelpCommand extends AbstractFunction {
         }
         else return new FunctionResult(null, Utilities.getDelimitedList(functionStream
                 .map(AbstractFunction::getHelpMessage)
-                .collect(Collectors.toList()), '\n'));
+                .collect(Collectors.toList()), Utilities.newLine));
     }
 
     @Override

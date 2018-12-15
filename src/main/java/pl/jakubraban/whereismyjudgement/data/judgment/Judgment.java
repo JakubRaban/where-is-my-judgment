@@ -46,22 +46,22 @@ public class Judgment {
         StringBuilder sb = new StringBuilder();
         if(this.isReasons())
             sb.append("(Dla tego numeru sprawy załadowane pliki zawierają tylko uzasadnienie wyroku - dane mogą być niepełne)")
-            .append("\n");
+            .append(Utilities.newLine);
         sb.append("Sygnatura: ");
         for(CourtCaseReference aCase : concernedCourtCases) {
             sb.append(aCase.getCaseNumber()).append(" ");
         }
-        sb.append("\n");
+        sb.append(Utilities.newLine);
         sb.append("Data: ");
         sb.append(new SimpleDateFormat("dd.MM.yyyy").format(judgmentDate.getTime()));
-        sb.append("\n");
+        sb.append(Utilities.newLine);
         sb.append("Typ sądu: ");
         sb.append(courtType);
         if (this.getJudges().size() > 0) {
-            sb.append("\n");
-            sb.append("Lista sędziów: ").append("\n");
+            sb.append(Utilities.newLine);
+            sb.append("Lista sędziów: ").append(Utilities.newLine);
             for(Judge judge : judges) {
-                sb.append(" -- ").append(judge).append("\n");
+                sb.append(" -- ").append(judge).append(Utilities.newLine);
             }
         }
         return sb.toString();
@@ -77,7 +77,7 @@ public class Judgment {
                 if(found.isPresent()) return found.orElseThrow().getReasons();
             }
         }
-        if(index == -1) return "(Brak uzasadnienia w wyroku) \n" + textContent;
+        if(index == -1) return "(Brak uzasadnienia w wyroku)" + Utilities.newLine + textContent;
         String extractedReasons = textContent.substring(index);
         return Utilities.dropHTMLTags(extractedReasons);
     }
@@ -112,6 +112,6 @@ public class Judgment {
 
     public void mergeWithReasons(Judgment reasons) {
         if(!reasons.isReasons()) throw new IllegalArgumentException();
-        this.textContent = this.textContent.concat("\n" + reasons.textContent);
+        this.textContent = this.textContent.concat(Utilities.newLine + reasons.textContent);
     }
 }

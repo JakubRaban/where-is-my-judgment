@@ -4,6 +4,7 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
+import pl.jakubraban.whereismyjudgement.Utilities;
 import pl.jakubraban.whereismyjudgement.data.judge.Judge;
 import pl.jakubraban.whereismyjudgement.data.judge.JudgeRole;
 import pl.jakubraban.whereismyjudgement.data.judgment.CourtCaseReference;
@@ -89,9 +90,9 @@ public class JudgmentFromHTMLCreator {
         Element table = htmlDocument.select("table").get(3);
         Elements sentence = table.getElementsByClass("info-list-label-uzasadnienie");
         for(Element element : sentence) {
-            result.append(element.text()).append("\n");
+            result.append(element.text()).append(Utilities.newLine);
         }
-        textContent = result.toString().replaceAll("\\\\", "\n");
+        textContent = result.toString().replaceAll("\\\\", Utilities.newLine);
     }
 
     private void setFields(Map<String, String> parameters) {

@@ -1,11 +1,13 @@
 package pl.jakubraban.whereismyjudgement.functions;
 
-import java.awt.*;
+import java.awt.Desktop;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
 
 public class NumberOfJudgmentsOfSpecifiedJudgeFunction extends AbstractFunction {
+
+    private boolean ran = false;
 
     NumberOfJudgmentsOfSpecifiedJudgeFunction(String name) {
         super(name);
@@ -15,13 +17,14 @@ public class NumberOfJudgmentsOfSpecifiedJudgeFunction extends AbstractFunction 
     FunctionResult invoke(String... args) {
         if(args.length < 1) throw tooFewArguments;
         else if(args.length > 1) {
-            if((args[0].equals("Anna") && args[1].equals("Maria") && args[2].equals("Wesołowska"))) {
+            if(String.join(" ", args[0], args[1], args[2]).equals("Anna Maria Wesołowska") && !ran) {
                 Desktop desktop = Desktop.getDesktop();
                 try {
                     desktop.browse(new URI("https://www.youtube.com/watch?v=hUvo5YR2ooY"));
                 } catch (URISyntaxException | IOException e) {
                     return new FunctionResult(null);
                 }
+                ran = true;
             }
             return numberOfJudgmentsOfSpecifiedJudge(args[0], args[1]);
         }
