@@ -14,7 +14,7 @@ public class Console {
     private FunctionInvoker invoker = new FunctionInvoker();
     private Scanner sc = new Scanner(System.in);
 
-    public void initialize(String judgmentsPath) {
+    public void initialize(String judgmentsPath) throws IOException {
         try {
             FormattableFunctionResult fileLoadingResult =
                     new FormattableFunctionResult(invoker.invoke("setPath", judgmentsPath));
@@ -29,11 +29,12 @@ public class Console {
         readUserCommands();
     }
 
-    private void readUserCommands() {
+    private void readUserCommands() throws IOException {
+        String command = "";
         while(true) {
             try {
                 System.out.print("?> ");
-                String command = sc.nextLine();
+                command = sc.nextLine();
                 FormattableFunctionResult result = new FormattableFunctionResult(commandParser.parse(command));
                 String formattedResult = result.format();
                 System.out.println(formattedResult);
@@ -41,8 +42,11 @@ public class Console {
                 System.out.println("Błąd odczytu z pliku");
             } catch (IllegalArgumentException iae) {
                 System.out.println("BŁĄD: Nieprawidłowy argument lub ilość argumentów");
+                System.out.println("Prawidłowe użycie: " +
+                        new FormattableFunctionResult(invoker.invoke("help", command)).format());
             } catch(NoSuchElementException nsee) {
                 System.out.println("BŁĄD: Złe polecenie");
+                System.out.println("Wpisz help aby uzyskać pomoc");
             } finally {
                 System.out.println();
             }
