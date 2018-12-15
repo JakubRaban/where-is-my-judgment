@@ -13,7 +13,7 @@ public class CommandParser {
     private FunctionInvoker invoker = new FunctionInvoker();
 
     public FunctionResult parse(String input) throws IOException {
-        if (input.isEmpty()) return new FunctionResult(null);
+        if (input.trim().isEmpty()) return new FunctionResult(null);
         String[] commandParts = splitInputBySpacesOutsideQuotes(input);
         int numberOfArguments = commandParts.length - 1;
         String command = commandParts[0];

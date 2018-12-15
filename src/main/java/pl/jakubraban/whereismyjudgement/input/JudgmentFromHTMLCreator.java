@@ -60,7 +60,7 @@ public class JudgmentFromHTMLCreator {
 
     private void setSignatures() {
         String signatureHeader = htmlDocument.getElementsByClass("war_header").first().text();
-        String properSignature = signatureHeader.substring(0, signatureHeader.indexOf("-") - 1);
+        String properSignature = signatureHeader.substring(0, signatureHeader.indexOf("-") - 1).trim();
         signatures = Collections.singletonList(new CourtCaseReference(properSignature));
     }
 
@@ -123,7 +123,7 @@ public class JudgmentFromHTMLCreator {
         for(String aCase : courtCasesStringArray) {
             aCase = aCase.trim();
             if(!aCase.contains("Dz.U.") && !aCase.contains("Dz. U.")) {
-                if (!aCase.contains("w sprawie") && !aCase.contains("r. o")) {
+                if (!aCase.contains("w sprawie") && !aCase.contains("r. o") && !aCase.contains("r. -")) {
                     StringBuilder sb = new StringBuilder(aCase);
                     sb.insert(aCase.indexOf("r.") + 2, " - ");
                     aCase = sb.toString();
