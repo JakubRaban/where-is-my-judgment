@@ -25,3 +25,7 @@ dependencies {
     compile 'org.jsoup:jsoup:1.11.3'
     compile 'jline:jline:2.14.2'
 }
+
+run {
+    standardInput = System.in
+}
