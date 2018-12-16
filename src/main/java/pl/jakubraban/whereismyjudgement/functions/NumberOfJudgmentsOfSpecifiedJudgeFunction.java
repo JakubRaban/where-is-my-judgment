@@ -17,7 +17,7 @@ public class NumberOfJudgmentsOfSpecifiedJudgeFunction extends AbstractFunction 
     FunctionResult invoke(String... args) {
         if(args.length < 1) throw tooFewArguments;
         else if(args.length > 1) {
-            if(String.join(" ", args[0], args[1], args[2]).equals("Anna Maria Wesołowska") && !ran) {
+            if(args.length == 3 && String.join(" ", args[0], args[1], args[2]).equals("Anna Maria Wesołowska") && !ran) {
                 Desktop desktop = Desktop.getDesktop();
                 try {
                     desktop.browse(new URI("https://www.youtube.com/watch?v=hUvo5YR2ooY"));
