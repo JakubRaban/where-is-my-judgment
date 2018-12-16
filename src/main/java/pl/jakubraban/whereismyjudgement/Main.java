@@ -9,8 +9,8 @@ public class Main {
     public static void main(String ... args) {
 
         try {
-            System.out.println("Ładowanie wyroków . . .");
-            new Console().initialize(args[0]);
+            if (args.length > 1) new Console().initialize(args[0], args[1]);
+            else new Console().initialize(args[0]);
         } catch (ArrayIndexOutOfBoundsException e) {
             System.out.println("BŁĄD: Nie podano ścieżki dostępu do plików z wyrokami");
         } catch (IOException e) {
