@@ -16,7 +16,7 @@ public class Console {
     private Scanner sc = new Scanner(System.in);
     private OutputFilePrinter filePrinter;
 
-    public void initialize(String judgmentsPath) throws IOException {
+    public Console(String judgmentsPath) {
         try {
             System.out.println("Ładowanie wyroków z folderu " + judgmentsPath + " . . .");
             FormattableFunctionResult fileLoadingResult =
@@ -29,10 +29,10 @@ public class Console {
         } finally {
             System.out.println();
         }
-        readUserCommands();
     }
 
-    public void initialize(String judgmentsPath, String outputFolderLocation) throws IOException {
+    public Console(String judgmentsPath, String outputFolderLocation) {
+        this(judgmentsPath);
         try {
             System.out.println(outputFolderLocation);
             Path outputFolderPath = Path.of(outputFolderLocation);
@@ -40,10 +40,9 @@ public class Console {
         } catch (InvalidPathException e) {
             System.out.println("Zła nazwa folderu dla plików wyjściowych");
         }
-        initialize(judgmentsPath);
     }
 
-    private void readUserCommands() throws IOException {
+    public void readUserCommands() throws IOException {
         String command = "";
         while (true) {
             try {

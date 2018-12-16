@@ -9,6 +9,8 @@ import java.util.List;
 
 public class Utilities {
 
+    private Utilities() {}
+
     public static String newLine = System.getProperty("line.separator");
 
     public static String getDelimitedList(List list, String delimiter) {
