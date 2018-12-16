@@ -17,7 +17,7 @@ public class OutputFilePrinter {
     public OutputFilePrinter(Path folderPath) {
         if(!Files.isDirectory(folderPath)) throw new InvalidPathException(folderPath.toString(), "is not a directory");
         Calendar currentDate = Calendar.getInstance();
-        String filename = "output-" + new SimpleDateFormat("yyyy-MM-dd-hh-mm-ss").format(currentDate.getTime()) + ".txt";
+        String filename = "where-is-my-judgment-output-" + new SimpleDateFormat("yyyy-MM-dd-hh-mm-ss").format(currentDate.getTime()) + ".txt";
         fileLocation = Path.of(folderPath.toString(), filename);
     }
 
@@ -32,4 +32,7 @@ public class OutputFilePrinter {
         }
     }
 
+    public Path getFileLocation() {
+        return fileLocation;
+    }
 }

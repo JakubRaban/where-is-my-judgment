@@ -17,13 +17,15 @@ public class Console {
     private OutputFilePrinter filePrinter;
 
     public Console(String judgmentsPath) {
+        greetUser();
         try {
             System.out.println("Ładowanie wyroków z folderu " + judgmentsPath + " . . .");
             FormattableFunctionResult fileLoadingResult =
                     new FormattableFunctionResult(invoker.invoke("setPath", judgmentsPath));
             System.out.println(fileLoadingResult.format());
         } catch (InvalidPathException ipe) {
-            System.out.println("BŁĄD: Podana jako parametr ścieżka nie jest katalogiem");
+            System.out.println("BŁĄD: Podana jako parametr ścieżka nie jest istniejącym katalogiem");
+            System.exit(-1);
         } catch (IOException ioe) {
             System.out.println("Błąd odczytu pliku");
         } finally {
@@ -34,12 +36,18 @@ public class Console {
     public Console(String judgmentsPath, String outputFolderLocation) {
         this(judgmentsPath);
         try {
-            System.out.println(outputFolderLocation);
             Path outputFolderPath = Path.of(outputFolderLocation);
             filePrinter = new OutputFilePrinter(outputFolderPath);
+            System.out.println("Wynik działania programu będzie zapisywany do pliku " + filePrinter.getFileLocation() + "\n");
         } catch (InvalidPathException e) {
-            System.out.println("Zła nazwa folderu dla plików wyjściowych");
+            System.out.println("Zła nazwa folderu dla plików wyjściowych" + "\n");
         }
+    }
+
+    private void greetUser() {
+        System.out.println("\n" + "Where Is My Judgment -- program do prezentowania danych o wyrokach sądów");
+        System.out.println("Autor: Jakub Raban, 2018");
+        System.out.println("Aby uzyskać pomoc, wpisz help" + "\n");
     }
 
     public void readUserCommands() throws IOException {
