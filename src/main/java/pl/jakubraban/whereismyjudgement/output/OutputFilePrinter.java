@@ -4,7 +4,6 @@ import pl.jakubraban.whereismyjudgement.Utilities;
 
 import java.io.IOException;
 import java.nio.file.Files;
-import java.nio.file.InvalidPathException;
 import java.nio.file.Path;
 import java.nio.file.StandardOpenOption;
 import java.text.SimpleDateFormat;
@@ -15,10 +14,14 @@ public class OutputFilePrinter {
     private Path fileLocation;
 
     public OutputFilePrinter(Path folderPath) {
-        if(!Files.isDirectory(folderPath)) throw new InvalidPathException(folderPath.toString(), "is not a directory");
-        Calendar currentDate = Calendar.getInstance();
-        String filename = "where-is-my-judgment-output-" + new SimpleDateFormat("yyyy-MM-dd-hh-mm-ss").format(currentDate.getTime()) + ".txt";
-        fileLocation = Path.of(folderPath.toString(), filename);
+        try {
+            if(!Files.exists(folderPath)) Files.createDirectory(folderPath);
+            Calendar currentDate = Calendar.getInstance();
+            String filename = "where-is-my-judgment-output-" + new SimpleDateFormat("yyyy-MM-dd-hh-mm-ss").format(currentDate.getTime()) + ".txt";
+            fileLocation = Path.of(folderPath.toString(), filename);
+        } catch (IOException e) {
+            System.out.println("Błąd przy otwieraniu tworzeniu pliku z wynikami programu");
+        }
     }
 
     public void appendToFile(String input, String text) {
