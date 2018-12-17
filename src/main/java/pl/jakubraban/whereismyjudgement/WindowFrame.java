@@ -7,26 +7,14 @@ import java.awt.event.KeyListener;
 
 public class WindowFrame extends JFrame implements KeyListener {
 
-    private JTextField promptField = new JTextField("?> ");
-    private JTextField inputField = new JTextField();
-    private JTextArea outputField = new JTextArea(20,20);
+    private JTextField promptField;
+    private JTextField inputField;
+    private JScrollPane outputArea;
+    private JTextArea outputField;
+    JTextArea txtNotes = new JTextArea();
 
     public WindowFrame() {
-        setSize(1000, 750);
-        setVisible(true);
-        setResizable(false);
-        addKeyListener(this);
-        setTitle("Where Is My Judgment");
-
-        promptField.setVisible(true);
-        promptField.setBounds(0, 685, 30, 30);
-        promptField.setBackground(Color.BLACK);
-        promptField.setForeground(Color.WHITE);
-        promptField.setFont(new Font("Consolas", Font.PLAIN, 20));
-        promptField.setEnabled(false);
-        promptField.setBorder(null);
-        add(promptField);
-
+        inputField = new JTextField();
         inputField.setVisible(true);
         inputField.setBounds(30,685,970,30);
         inputField.setBackground(Color.BLACK);
@@ -34,23 +22,20 @@ public class WindowFrame extends JFrame implements KeyListener {
         inputField.setFont(new Font("Consolas", Font.PLAIN, 20));
         inputField.setBorder(null);
         inputField.addKeyListener(this);
-        add(inputField);
+        inputField.setText("?> ");
+        JScrollPane scrollPane = new JScrollPane(txtNotes);
+        scrollPane.setSize(800,500);
+        txtNotes.setEnabled(false);
+        txtNotes.setBackground(Color.BLACK);
+        txtNotes.setForeground(Color.WHITE);
+        txtNotes.setFont(new Font("Consolas", Font.PLAIN, 20));
+        scrollPane.setBorder(BorderFactory.createMatteBorder(0,0,1,0,Color.WHITE));
+        add(scrollPane, BorderLayout.CENTER);
 
-        outputField.setVisible(true);
-        outputField.setBackground(Color.BLACK);
-        outputField.setEnabled(false);
-        outputField.setLineWrap(true);
-        outputField.setFont(new Font("Consolas", Font.PLAIN, 20));
-        add(outputField);
-
-    }
-
-    public JTextArea getOutputField() {
-        return outputField;
-    }
-
-    public JTextArea getInputField() {
-        return outputField;
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setSize(new Dimension(800, 600));
+        setVisible(true);
+        add(inputField, BorderLayout.SOUTH);
     }
 
     @Override
@@ -65,10 +50,16 @@ public class WindowFrame extends JFrame implements KeyListener {
 
     @Override
     public void keyReleased(KeyEvent e) {
-        if(e.getKeyCode() == 10) {
+        if(e.getKeyCode() == KeyEvent.VK_ENTER) {
             String typed = inputField.getText();
             inputField.setText("");
-            outputField.append(typed + "\n");
+            txtNotes.append(typed + "\n");
+            inputField.setText("?> ");
+        }
+        if(e.getKeyCode() == KeyEvent.VK_BACK_SPACE || e.getKeyCode() == KeyEvent.VK_LEFT) {
+            if(inputField.getCaretPosition() <= 3) {
+                inputField.setText("?> ");
+            }
         }
     }
 }
