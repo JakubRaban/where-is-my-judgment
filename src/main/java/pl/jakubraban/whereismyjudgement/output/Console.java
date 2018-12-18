@@ -8,7 +8,6 @@ import java.io.IOException;
 import java.nio.file.InvalidPathException;
 import java.nio.file.Path;
 import java.util.NoSuchElementException;
-import java.util.Scanner;
 
 public class Console {
 

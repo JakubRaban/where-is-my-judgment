@@ -13,6 +13,7 @@ public class WindowFrame extends JFrame implements KeyListener {
     private JTextArea outputField = new JTextArea();
     private String prompt = "?> ";
     private Console console;
+    private CommandHistoryHandler historyHandler = new CommandHistoryHandler();
 
     public WindowFrame(Console console) {
         this.console = console;
@@ -43,7 +44,7 @@ public class WindowFrame extends JFrame implements KeyListener {
         outputField.setBackground(Color.BLACK);
         outputField.setForeground(Color.RED);
         outputField.setEnabled(false);
-        outputField.setFont(new Font("Consolas", Font.PLAIN, 16));
+        outputField.setFont(new Font("Consolas", Font.PLAIN, 14));
         outputField.setLineWrap(true);
         add(scrollPane, BorderLayout.CENTER);
     }
@@ -66,16 +67,24 @@ public class WindowFrame extends JFrame implements KeyListener {
     public void keyReleased(KeyEvent e) {
         if(e.getKeyCode() == KeyEvent.VK_ENTER) {
             String typed = inputField.getText();
+            String commandWithoutPrompt = typed.replace(prompt.trim(), "").trim();
             inputField.setText("");
             printMessage(typed);
+            historyHandler.add(commandWithoutPrompt);
             inputField.setText(prompt);
-            console.execute(typed.replace("?>", ""));
+            console.execute(commandWithoutPrompt);
             outputField.setCaretPosition(outputField.getDocument().getLength());
         }
         if(e.getKeyCode() == KeyEvent.VK_BACK_SPACE || e.getKeyCode() == KeyEvent.VK_LEFT) {
             if(inputField.getCaretPosition() <= 3) {
                 inputField.setText(prompt);
             }
+        }
+        if(e.getKeyCode() == KeyEvent.VK_UP) {
+            inputField.setText(prompt + historyHandler.previous());
+        }
+        if(e.getKeyCode() == KeyEvent.VK_DOWN) {
+            inputField.setText(prompt + historyHandler.next());
         }
     }
 }
