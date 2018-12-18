@@ -19,7 +19,13 @@ public class GetTopReferencedRegulationsFunction extends AbstractFunction {
     @Override
     FunctionResult invoke(String... args) {
         if(args.length == 0) return getTopNReferencedRegulations(10);
-        return getTopNReferencedRegulations(Integer.parseInt(args[0]));
+        else {
+            try {
+                return getTopNReferencedRegulations(Integer.parseInt(args[0]));
+            } catch (NumberFormatException e) {
+                return getTopNReferencedRegulations(10);
+            }
+        }
     }
 
     @Override

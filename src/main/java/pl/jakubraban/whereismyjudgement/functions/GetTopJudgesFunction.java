@@ -17,7 +17,13 @@ public class GetTopJudgesFunction extends AbstractFunction {
     @Override
     FunctionResult invoke(String... args) {
         if(args.length == 0) return getTopNJudges(10);
-        else return getTopNJudges(Integer.parseInt(args[0]));
+        else {
+            try {
+                return getTopNJudges(Integer.parseInt(args[0]));
+            } catch (NumberFormatException e) {
+                return getTopNJudges(10);
+            }
+        }
     }
 
     @Override

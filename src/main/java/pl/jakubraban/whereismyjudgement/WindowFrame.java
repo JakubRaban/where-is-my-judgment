@@ -42,7 +42,6 @@ public class WindowFrame extends JFrame implements KeyListener {
         scrollPane.setSize(800,500);
         scrollPane.setBorder(BorderFactory.createMatteBorder(0,0,1,0, Color.WHITE));
         outputField.setBackground(Color.BLACK);
-        outputField.setForeground(Color.RED);
         outputField.setEnabled(false);
         outputField.setFont(new Font("Consolas", Font.PLAIN, 14));
         outputField.setLineWrap(true);
