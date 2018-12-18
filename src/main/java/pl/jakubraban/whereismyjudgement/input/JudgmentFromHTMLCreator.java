@@ -130,6 +130,9 @@ public class JudgmentFromHTMLCreator {
                     aCase = sb.toString();
                 }
                 if(aCase.endsWith(".")) aCase = aCase.substring(0, aCase.length() - 1);
+                if(aCase.contains("-tekst") || aCase.contains("- tekst")) {
+                    aCase = aCase.substring(0, aCase.lastIndexOf("-")).trim();
+                }
                 toReturn.add(new Regulation(aCase));
             }
         }
