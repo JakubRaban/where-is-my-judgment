@@ -25,8 +25,14 @@ public class Console {
                     new FormattableFunctionResult(invoker.invoke("setPath", judgmentsPath));
             frame.printMessage(fileLoadingResult.format());
         } catch (InvalidPathException ipe) {
-            frame.printMessage("BŁĄD: Podana jako parametr ścieżka nie jest istniejącym katalogiem");
-            System.exit(-1);
+            try {
+                frame.printMessage("BŁĄD: Podana jako lokalizacja katalogu z wyrokami ścieżka nie jest istniejącym katalogiem");
+                frame.printMessage("Kontynuacja działania programu nie jest możliwa");
+                Thread.sleep(60000);
+                System.exit(-1);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
         } catch (IOException ioe) {
             frame.printMessage("Błąd odczytu pliku");
         } finally {
@@ -51,7 +57,7 @@ public class Console {
         frame.printMessage("Aby uzyskać pomoc, wpisz help" + "\n");
     }
 
-    public void execute(String typedCommand) {
+    public synchronized void execute(String typedCommand) {
         try {
             typedCommand = typedCommand.trim();
             FormattableFunctionResult result = new FormattableFunctionResult(commandParser.parse(typedCommand));
