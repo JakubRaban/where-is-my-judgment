@@ -1,5 +1,6 @@
 package pl.jakubraban.whereismyjudgement.output;
 
+import pl.jakubraban.whereismyjudgement.WindowFrame;
 import pl.jakubraban.whereismyjudgement.functions.FunctionInvoker;
 import pl.jakubraban.whereismyjudgement.input.CommandParser;
 
@@ -13,23 +14,24 @@ public class Console {
 
     private CommandParser commandParser = new CommandParser();
     private FunctionInvoker invoker = new FunctionInvoker();
-    private Scanner sc = new Scanner(System.in);
     private OutputFilePrinter filePrinter;
+    private WindowFrame frame;
 
     public Console(String judgmentsPath) {
+        frame = new WindowFrame(this);
         greetUser();
         try {
-            System.out.println("Ładowanie wyroków z folderu " + judgmentsPath + " . . .");
+            frame.printMessage("Ładowanie wyroków z folderu " + judgmentsPath + " . . .");
             FormattableFunctionResult fileLoadingResult =
                     new FormattableFunctionResult(invoker.invoke("setPath", judgmentsPath));
-            System.out.println(fileLoadingResult.format());
+            frame.printMessage(fileLoadingResult.format());
         } catch (InvalidPathException ipe) {
-            System.out.println("BŁĄD: Podana jako parametr ścieżka nie jest istniejącym katalogiem");
+            frame.printMessage("BŁĄD: Podana jako parametr ścieżka nie jest istniejącym katalogiem");
             System.exit(-1);
         } catch (IOException ioe) {
-            System.out.println("Błąd odczytu pliku");
+            frame.printMessage("Błąd odczytu pliku");
         } finally {
-            System.out.println();
+            frame.printMessage("");
         }
     }
 
@@ -38,41 +40,45 @@ public class Console {
         try {
             Path outputFolderPath = Path.of(outputFolderLocation);
             filePrinter = new OutputFilePrinter(outputFolderPath);
-            System.out.println("Wynik działania programu będzie zapisywany do pliku " + filePrinter.getFileLocation() + "\n");
+            frame.printMessage("Wynik działania programu będzie zapisywany do pliku " + filePrinter.getFileLocation() + "\n");
         } catch (InvalidPathException e) {
-            System.out.println("Zła nazwa folderu dla plików wyjściowych" + "\n");
+            frame.printMessage("Zła nazwa folderu dla plików wyjściowych" + "\n");
         }
     }
 
     private void greetUser() {
-        System.out.println("\n" + "Where Is My Judgment -- program do prezentowania danych o wyrokach sądów");
-        System.out.println("Autor: Jakub Raban, 2018");
-        System.out.println("Aby uzyskać pomoc, wpisz help" + "\n");
+        frame.printMessage("\n" + "Where Is My Judgment -- program do prezentowania danych o wyrokach sądów");
+        frame.printMessage("Autor: Jakub Raban, 2018");
+        frame.printMessage("Aby uzyskać pomoc, wpisz help" + "\n");
     }
 
-    public void readUserCommands() throws IOException {
-        String command = "";
-        while (true) {
+    public void execute(String typedCommand) {
+        try {
+            typedCommand = typedCommand.trim();
+            FormattableFunctionResult result = new FormattableFunctionResult(commandParser.parse(typedCommand));
+            String formattedResult = result.format();
+            frame.printMessage(formattedResult);
+            if (filePrinter != null) filePrinter.appendToFile(typedCommand, formattedResult);
+        } catch (IOException ioe) {
+            frame.printMessage("Błąd odczytu z pliku");
+        } catch (IllegalArgumentException iae) {
+            frame.printMessage("BŁĄD: Nieprawidłowy argument lub ilość argumentów");
             try {
-                System.out.print("?> ");
-                command = sc.nextLine();
-                FormattableFunctionResult result = new FormattableFunctionResult(commandParser.parse(command));
-                String formattedResult = result.format();
-                System.out.println(formattedResult);
-                if (filePrinter != null) filePrinter.appendToFile(command, formattedResult);
-            } catch (IOException ioe) {
-                System.out.println("Błąd odczytu z pliku");
-            } catch (IllegalArgumentException iae) {
-                System.out.println("BŁĄD: Nieprawidłowy argument lub ilość argumentów");
-                System.out.println("Prawidłowe użycie: " +
-                        new FormattableFunctionResult(invoker.invoke("help", command)).format());
-            } catch (NoSuchElementException nsee) {
-                System.out.println("BŁĄD: Złe polecenie");
-                System.out.println("Wpisz help aby uzyskać pomoc");
-            } finally {
-                System.out.println();
+                frame.printMessage("Prawidłowe użycie: " +
+                        new FormattableFunctionResult(invoker.invoke("help", typedCommand)).format());
+            } catch (IOException e) {
+                e.printStackTrace();
             }
+        } catch (NoSuchElementException nsee) {
+            frame.printMessage("BŁĄD: Złe polecenie");
+            frame.printMessage("Wpisz help aby uzyskać pomoc");
+        } finally {
+            frame.printMessage("");
         }
+    }
+
+    public WindowFrame getFrame() {
+        return frame;
     }
 
 }
