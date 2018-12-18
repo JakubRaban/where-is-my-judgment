@@ -12,6 +12,8 @@ import java.util.List;
 
 public class GetNewJudgmentsFunction extends AbstractFunction {
 
+    public static boolean everExecuted = false;
+
     GetNewJudgmentsFunction(String name) {
         super(name);
     }
@@ -27,7 +29,7 @@ public class GetNewJudgmentsFunction extends AbstractFunction {
         return name + " ścieżka -- ustaw folder gdzie są pliki z wyrokami";
     }
 
-    private FunctionResult getNewJudgments(String path) throws IOException {
+    private synchronized FunctionResult getNewJudgments(String path) throws IOException {
         if(JudgmentDirectoryReader.isPathSet()) return new FunctionResult(null, "Ścieżka już ustawiona");
         JudgmentDirectoryReader reader = new JudgmentDirectoryReader(path);
         JudgmentJSONParser parser = new JudgmentJSONParser();
@@ -50,6 +52,7 @@ public class GetNewJudgmentsFunction extends AbstractFunction {
                 newJudgmentsCounter++;
             }
         }
+        everExecuted = true;
         return new FunctionResult(null, "Załadowano wyroków: " + newJudgmentsCounter);
     }
 

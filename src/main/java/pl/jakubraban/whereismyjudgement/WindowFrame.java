@@ -1,5 +1,6 @@
 package pl.jakubraban.whereismyjudgement;
 
+import pl.jakubraban.whereismyjudgement.functions.GetNewJudgmentsFunction;
 import pl.jakubraban.whereismyjudgement.output.Console;
 
 import javax.swing.*;
@@ -21,6 +22,7 @@ public class WindowFrame extends JFrame implements KeyListener {
         initializeOutputField();
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(new Dimension(800, 600));
+        setTitle("Where Is My Judgment");
         setVisible(true);
         add(inputField, BorderLayout.SOUTH);
     }
@@ -28,10 +30,10 @@ public class WindowFrame extends JFrame implements KeyListener {
     private void initializeInputField() {
         inputField = new JTextField();
         inputField.setVisible(true);
-        inputField.setBounds(30,685,970,30);
         inputField.setBackground(Color.BLACK);
-        inputField.setForeground(Color.WHITE);
+        inputField.setForeground(Color.white);
         inputField.setFont(new Font("Consolas", Font.PLAIN, 16));
+        inputField.setCaretColor(Color.BLACK);
         inputField.setBorder(null);
         inputField.addKeyListener(this);
         inputField.setText(prompt);
@@ -42,7 +44,8 @@ public class WindowFrame extends JFrame implements KeyListener {
         scrollPane.setSize(800,500);
         scrollPane.setBorder(BorderFactory.createMatteBorder(0,0,1,0, Color.WHITE));
         outputField.setBackground(Color.BLACK);
-        outputField.setEnabled(false);
+        outputField.setForeground(Color.WHITE);
+        outputField.setEditable(false);
         outputField.setFont(new Font("Consolas", Font.PLAIN, 14));
         outputField.setLineWrap(true);
         add(scrollPane, BorderLayout.CENTER);
@@ -64,7 +67,7 @@ public class WindowFrame extends JFrame implements KeyListener {
 
     @Override
     public void keyReleased(KeyEvent e) {
-        if(e.getKeyCode() == KeyEvent.VK_ENTER) {
+        if(e.getKeyCode() == KeyEvent.VK_ENTER && GetNewJudgmentsFunction.everExecuted) {
             String typed = inputField.getText();
             String commandWithoutPrompt = typed.replace(prompt.trim(), "").trim();
             inputField.setText("");
@@ -72,12 +75,6 @@ public class WindowFrame extends JFrame implements KeyListener {
             historyHandler.add(commandWithoutPrompt);
             inputField.setText(prompt);
             console.execute(commandWithoutPrompt);
-            outputField.setCaretPosition(outputField.getDocument().getLength());
-        }
-        if(e.getKeyCode() == KeyEvent.VK_BACK_SPACE || e.getKeyCode() == KeyEvent.VK_LEFT) {
-            if(inputField.getCaretPosition() <= 3) {
-                inputField.setText(prompt);
-            }
         }
         if(e.getKeyCode() == KeyEvent.VK_UP) {
             inputField.setText(prompt + historyHandler.previous());
@@ -85,5 +82,9 @@ public class WindowFrame extends JFrame implements KeyListener {
         if(e.getKeyCode() == KeyEvent.VK_DOWN) {
             inputField.setText(prompt + historyHandler.next());
         }
+        if (inputField.getCaretPosition() <= prompt.length()) {
+            inputField.setText(prompt);
+        }
+        outputField.setCaretPosition(outputField.getDocument().getLength());
     }
 }
