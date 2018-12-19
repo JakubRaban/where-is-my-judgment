@@ -19,7 +19,7 @@ public class GetTopJudgesFunction extends AbstractFunction {
         if(args.length == 0) return getTopNJudges(10);
         else {
             try {
-                return getTopNJudges(Integer.parseInt(args[0]));
+                return getTopNJudges(Math.abs(Integer.parseInt(args[0])));
             } catch (NumberFormatException e) {
                 return getTopNJudges(10);
             }

@@ -33,7 +33,7 @@ public class WindowFrame extends JFrame implements KeyListener {
         inputField.setBackground(Color.BLACK);
         inputField.setForeground(Color.white);
         inputField.setFont(new Font("Consolas", Font.PLAIN, 16));
-        inputField.setCaretColor(Color.BLACK);
+        inputField.setCaretColor(Color.WHITE);
         inputField.setBorder(null);
         inputField.addKeyListener(this);
         inputField.setText(prompt);
@@ -82,7 +82,7 @@ public class WindowFrame extends JFrame implements KeyListener {
         if(e.getKeyCode() == KeyEvent.VK_DOWN) {
             inputField.setText(prompt + historyHandler.next());
         }
-        if (inputField.getCaretPosition() <= prompt.length()) {
+        if (inputField.getCaretPosition() < prompt.length()) {
             inputField.setText(prompt);
         }
         outputField.setCaretPosition(outputField.getDocument().getLength());

@@ -5,12 +5,8 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 import pl.jakubraban.whereismyjudgement.Utilities;
-import pl.jakubraban.whereismyjudgement.data.judge.Judge;
-import pl.jakubraban.whereismyjudgement.data.judge.JudgeRole;
-import pl.jakubraban.whereismyjudgement.data.judgment.CourtCaseReference;
-import pl.jakubraban.whereismyjudgement.data.judgment.CourtType;
-import pl.jakubraban.whereismyjudgement.data.judgment.Judgment;
-import pl.jakubraban.whereismyjudgement.data.judgment.JudgmentType;
+import pl.jakubraban.whereismyjudgement.data.judge.*;
+import pl.jakubraban.whereismyjudgement.data.judgment.*;
 import pl.jakubraban.whereismyjudgement.data.other.Regulation;
 
 import java.io.File;
@@ -124,11 +120,13 @@ public class JudgmentFromHTMLCreator {
         for(String aCase : courtCasesStringArray) {
             aCase = aCase.trim();
             if(!aCase.contains("Dz.U.") && !aCase.contains("Dz. U.")) {
-                if (!aCase.contains("w sprawie") && !aCase.contains("r. o") && !aCase.contains("r. -")) {
+                if (!aCase.contains("w sprawie") && !aCase.contains("r. o")) {
                     StringBuilder sb = new StringBuilder(aCase);
                     sb.insert(aCase.indexOf("r.") + 2, " - ");
                     aCase = sb.toString();
                 }
+                aCase = aCase.replaceAll("- -", "-");
+                aCase = aCase.replaceAll("-  -", "-");
                 if(aCase.endsWith(".")) aCase = aCase.substring(0, aCase.length() - 1);
                 if(aCase.contains("-tekst") || aCase.contains("- tekst")) {
                     aCase = aCase.substring(0, aCase.lastIndexOf("-")).trim();

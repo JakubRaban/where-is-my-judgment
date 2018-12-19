@@ -12,6 +12,7 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 public class Judgment {
 
@@ -48,9 +49,7 @@ public class Judgment {
             sb.append("(Dla tego numeru sprawy załadowane pliki zawierają tylko uzasadnienie wyroku - dane mogą być niepełne)")
             .append(Utilities.newLine);
         sb.append("Sygnatura: ");
-        for(CourtCaseReference aCase : concernedCourtCases) {
-            sb.append(aCase.getCaseNumber()).append(" ");
-        }
+        sb.append(Utilities.getDelimitedList(concernedCourtCases.stream().map(CourtCaseReference::getCaseNumber).collect(Collectors.toList()), ", "));
         sb.append(Utilities.newLine);
         sb.append("Data: ");
         sb.append(new SimpleDateFormat("dd.MM.yyyy").format(judgmentDate.getTime()));

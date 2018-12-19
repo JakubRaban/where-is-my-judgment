@@ -21,7 +21,7 @@ public class GetTopReferencedRegulationsFunction extends AbstractFunction {
         if(args.length == 0) return getTopNReferencedRegulations(10);
         else {
             try {
-                return getTopNReferencedRegulations(Integer.parseInt(args[0]));
+                return getTopNReferencedRegulations(Math.abs(Integer.parseInt(args[0])));
             } catch (NumberFormatException e) {
                 return getTopNReferencedRegulations(10);
             }
