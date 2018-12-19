@@ -1,5 +1,6 @@
-package pl.jakubraban.whereismyjudgement;
+package pl.jakubraban.whereismyjudgement.output;
 
+import pl.jakubraban.whereismyjudgement.CommandHistoryHandler;
 import pl.jakubraban.whereismyjudgement.functions.GetNewJudgmentsFunction;
 import pl.jakubraban.whereismyjudgement.output.Console;
 

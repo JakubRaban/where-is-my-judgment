@@ -1,6 +1,5 @@
 package pl.jakubraban.whereismyjudgement.output;
 
-import pl.jakubraban.whereismyjudgement.WindowFrame;
 import pl.jakubraban.whereismyjudgement.functions.FunctionInvoker;
 import pl.jakubraban.whereismyjudgement.input.CommandParser;
 
